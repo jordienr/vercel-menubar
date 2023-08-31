@@ -80,9 +80,12 @@ const createWindow = async () => {
   };
 
   mainWindow = new BrowserWindow({
+    autoHideMenuBar: true,
     show: false,
     width: 420,
     height: 600,
+    titleBarStyle: 'hidden',
+    titleBarOverlay: true,
     icon: getAssetPath('icon.png'),
     webPreferences: {
       preload: app.isPackaged
@@ -91,9 +94,12 @@ const createWindow = async () => {
     },
   });
 
+  mainWindow.setWindowButtonVisibility(false);
+
   mainWindow.loadURL(resolveHtmlPath('index.html'));
 
   mainWindow.on('ready-to-show', () => {
+    mainWindow?.setMenu(null);
     if (!mainWindow) {
       throw new Error('"mainWindow" is not defined');
     }
