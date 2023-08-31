@@ -1,8 +1,3 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-* {
-  font-family: 'Roboto', sans-serif;
-  background: #f1f;
-}
