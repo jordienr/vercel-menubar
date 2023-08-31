@@ -1,4 +1,4 @@
-import { storage } from 'lib/storage';
+import { storage } from 'src/lib/storage';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 

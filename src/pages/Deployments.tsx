@@ -1,5 +1,5 @@
-import { useDeployments } from 'lib/queries';
-import { formatDate } from 'lib/dates';
+import { useDeployments } from 'src/lib/queries';
+import { formatDate } from 'src/lib/dates';
 import { Link } from 'react-router-dom';
 import { Deployment } from '../../types/Deployment';
 

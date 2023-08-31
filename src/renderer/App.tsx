@@ -1,8 +1,8 @@
 import { MemoryRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import './App.css';
-import { Deployments } from 'pages/Deployments';
+import { Deployments } from 'src/pages/Deployments';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { Config } from './Config';
+import { Config } from '../pages/Config';
 
 function Hello() {
   return (
