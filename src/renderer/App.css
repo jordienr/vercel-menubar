@@ -2,6 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
+::-webkit-scrollbar {
+  opacity: 0;
+  width: 0;
+}
+
 body {
   background-color: theme('colors.gray.900');
   color: theme('colors.gray.100');

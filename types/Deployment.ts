@@ -4,7 +4,13 @@ export type Deployment = {
   url: string;
   created: number;
   source: string;
-  state: string;
+  state?:
+    | 'BUILDING'
+    | 'ERROR'
+    | 'INITIALIZING'
+    | 'QUEUED'
+    | 'READY'
+    | 'CANCELED';
   readySubstate: string;
   type: string;
   creator: {

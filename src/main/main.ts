@@ -9,11 +9,21 @@
  * `./src/main.js` using webpack. This gives us some performance wins.
  */
 import path from 'path';
-import { app, BrowserWindow, shell, ipcMain } from 'electron';
+import {
+  app,
+  BrowserWindow,
+  shell,
+  ipcMain,
+  Tray,
+  Menu,
+  nativeImage,
+} from 'electron';
 import { autoUpdater } from 'electron-updater';
 import log from 'electron-log';
 import MenuBuilder from './menu';
 import { resolveHtmlPath } from './util';
+
+let tray;
 
 class AppUpdater {
   constructor() {
@@ -71,8 +81,8 @@ const createWindow = async () => {
 
   mainWindow = new BrowserWindow({
     show: false,
-    width: 1024,
-    height: 728,
+    width: 420,
+    height: 600,
     icon: getAssetPath('icon.png'),
     webPreferences: {
       preload: app.isPackaged
@@ -127,6 +137,8 @@ app.on('window-all-closed', () => {
 app
   .whenReady()
   .then(() => {
+    const icon = nativeImage.createFromPath('./assets/icons/16x16.png');
+    tray = new Tray(icon);
     createWindow();
     app.on('activate', () => {
       // On macOS it's common to re-create a window in the app when the

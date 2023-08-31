@@ -1,4 +1,20 @@
 import { useDeployments } from 'lib/queries';
+import { formatDate } from 'lib/dates';
+import { Deployment } from '../../types/Deployment';
+
+function StatusDot({ state }: { state: Deployment['state'] }) {
+  if (!state) return null;
+
+  const stateMap: Record<typeof state, string> = {
+    BUILDING: 'bg-blue-400',
+    READY: 'bg-green-400',
+    CANCELED: 'bg-gray-400',
+    ERROR: 'bg-red-400',
+    INITIALIZING: 'bg-yellow-400',
+    QUEUED: 'bg-yellow-400',
+  };
+  return <div className={`w-2 h-2 rounded-full ${stateMap[state]}`} />;
+}
 
 export function Deployments() {
   const { data, isLoading } = useDeployments();
@@ -7,21 +23,31 @@ export function Deployments() {
     <div className="p-4">
       <h1 className="h1">Deployments</h1>
       {isLoading && <p>Loading...</p>}
-      <div className="flex flex-col gap-4 mt-4">
+      <div className="flex flex-col mt-4">
         {data?.deployments.map((dep) => {
           return (
-            <div className="px-4">
-              <div className="font-semibold">{dep.name}</div>
-              <a
-                target="_blank"
-                className="font-mono underline text-xs"
-                href={`https://${dep.url}`}
-                rel="noreferrer"
-              >
-                {dep.url}
-              </a>
-              <div>{dep.state}</div>
-              <div>{dep.created}</div>
+            <div className="p-4 font-mono text-sm hover:bg-slate-700/30 rounded-xl">
+              <div className="flex items-center justify-between gap-2">
+                <div className="flex gap-2 items-center">
+                  <StatusDot state={dep.state} />
+                  <div className="font-semibold">{dep.name}</div>
+                </div>
+                <div className="text-slate-400">
+                  {formatDate(new Date(dep.created), 'DD/MM/YY HH:mm')}
+                </div>
+              </div>
+              <div className="flex justify-between items-center">
+                <a
+                  target="_blank"
+                  className="font-mono underline text-xs"
+                  href={`https://${dep.url}`}
+                  rel="noreferrer"
+                  title={`https://${dep.url}`}
+                >
+                  Open in browser
+                </a>
+                <span className="text-slate-400">@{dep.creator.username}</span>
+              </div>
             </div>
           );
         })}
