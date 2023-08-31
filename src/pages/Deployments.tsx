@@ -1,5 +1,6 @@
 import { useDeployments } from 'lib/queries';
 import { formatDate } from 'lib/dates';
+import { Link } from 'react-router-dom';
 import { Deployment } from '../../types/Deployment';
 
 function StatusDot({ state }: { state: Deployment['state'] }) {
@@ -21,12 +22,16 @@ export function Deployments() {
 
   return (
     <div className="p-4">
+      <Link to="/">Back</Link>
       <h1 className="h1">Deployments</h1>
       {isLoading && <p>Loading...</p>}
       <div className="flex flex-col mt-4">
         {data?.deployments.map((dep) => {
           return (
-            <div className="p-4 font-mono text-sm hover:bg-slate-700/30 rounded-xl">
+            <div
+              key={dep.createdAt}
+              className="p-4 font-mono text-sm hover:bg-slate-700/30 rounded-xl"
+            >
               <div className="flex items-center justify-between gap-2">
                 <div className="flex gap-2 items-center">
                   <StatusDot state={dep.state} />

@@ -84,8 +84,8 @@ const createWindow = async () => {
     show: false,
     width: 420,
     height: 600,
-    titleBarStyle: 'hidden',
-    titleBarOverlay: true,
+    titleBarStyle: 'customButtonsOnHover',
+    // titleBarOverlay: true,
     icon: getAssetPath('icon.png'),
     webPreferences: {
       preload: app.isPackaged
