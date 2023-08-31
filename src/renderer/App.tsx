@@ -1,6 +1,7 @@
 import { MemoryRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import './App.css';
 import { Deployments } from 'pages/Deployments';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { Config } from './Config';
 
 function Hello() {
@@ -16,13 +17,17 @@ function Hello() {
 }
 
 export default function App() {
+  const queryClient = new QueryClient();
+
   return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<Hello />} />
-        <Route path="/deployments" element={<Deployments />} />
-        <Route path="/config" element={<Config />} />
-      </Routes>
-    </Router>
+    <QueryClientProvider client={queryClient}>
+      <Router>
+        <Routes>
+          <Route path="/" element={<Hello />} />
+          <Route path="/deployments" element={<Deployments />} />
+          <Route path="/config" element={<Config />} />
+        </Routes>
+      </Router>
+    </QueryClientProvider>
   );
 }

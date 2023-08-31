@@ -11,8 +11,6 @@ export function createAPIClient() {
     Navigate({
       to: '/config',
     });
-
-    return;
   }
 
   async function _fetch(path: string, options?: RequestInit) {
