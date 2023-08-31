@@ -16,6 +16,7 @@ module.exports = {
     'import/prefer-default-export': 'off',
     'no-underscore-dangle': 'off',
     'consistent-return': 'off',
+    'no-console': 'off',
   },
   parserOptions: {
     ecmaVersion: 2020,

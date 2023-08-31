@@ -1,5 +1,6 @@
 import { Navigate } from 'react-router-dom';
 import { storage } from './storage';
+import { Deployment } from '../../types/Deployment';
 
 export function createAPIClient() {
   const BASE_URL = 'https://api.vercel.com';
@@ -35,7 +36,9 @@ export function createAPIClient() {
 
   return {
     deployments: {
-      list: () => _fetch('/v6/now/deployments'),
+      list: (): Promise<{
+        deployments: Deployment[];
+      }> => _fetch('/v6/now/deployments'),
     },
   };
 }
