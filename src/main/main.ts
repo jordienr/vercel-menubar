@@ -23,7 +23,7 @@ import log from 'electron-log';
 import MenuBuilder from './menu';
 import { resolveHtmlPath } from './util';
 
-let tray;
+let tray: Tray;
 
 class AppUpdater {
   constructor() {
@@ -143,8 +143,45 @@ app.on('window-all-closed', () => {
 app
   .whenReady()
   .then(() => {
+    app.dock.hide();
     const icon = nativeImage.createFromPath('./assets/icons/16x16.png');
     tray = new Tray(icon);
+    tray.on('click', () => {
+      mainWindow?.show();
+
+      // Set position to wherever the tray icon is
+      const trayBounds = tray.getBounds();
+      const windowBounds = mainWindow?.getBounds();
+      if (windowBounds) {
+        mainWindow?.setPosition(
+          trayBounds.x - windowBounds.width / 2 + trayBounds.width / 2,
+          trayBounds.y
+        );
+      }
+
+      // on click outside, hide window
+      mainWindow?.once('blur', () => {
+        mainWindow?.hide();
+      });
+
+      tray.setContextMenu(
+        Menu.buildFromTemplate([
+          {
+            label: 'Show',
+            click: () => {
+              mainWindow?.show();
+              mainWindow?.setPosition(0, 0);
+            },
+          },
+          {
+            label: 'Quit',
+            click: () => {
+              app.quit();
+            },
+          },
+        ])
+      );
+    });
     createWindow();
     app.on('activate', () => {
       // On macOS it's common to re-create a window in the app when the

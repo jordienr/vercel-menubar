@@ -6,6 +6,9 @@
   opacity: 0;
   width: 0;
 }
+.window-draggable {
+  -webkit-app-region: drag;
+}
 
 body {
   background-color: theme('colors.gray.900');

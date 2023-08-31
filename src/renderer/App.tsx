@@ -7,7 +7,9 @@ import { Config } from './Config';
 function Hello() {
   return (
     <div className="p-4">
-      <h1 className="text-2xl font-semibold">Vercel Menubar</h1>
+      <h1 className="text-2xl font-semibold window-draggable">
+        Vercel Menubar
+      </h1>
       <div className="grid grid-cols-3">
         <Link to="/deployments">Deployments</Link>
         <Link to="/config">Config</Link>

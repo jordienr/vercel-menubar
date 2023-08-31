@@ -21,9 +21,10 @@ export function Deployments() {
   const { data, isLoading } = useDeployments();
 
   return (
-    <div className="p-4">
+    <div className="p-4 window-draggable">
       <Link to="/">Back</Link>
-      <h1 className="h1">Deployments</h1>
+      <h1 className="h1 window-draggable">Deployments</h1>
+
       {isLoading && <p>Loading...</p>}
       <div className="flex flex-col mt-4">
         {data?.deployments.map((dep) => {
