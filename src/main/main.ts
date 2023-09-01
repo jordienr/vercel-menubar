@@ -85,7 +85,7 @@ const createWindow = async () => {
     width: 420,
     height: 600,
     titleBarStyle: 'customButtonsOnHover',
-    // titleBarOverlay: true,
+    alwaysOnTop: true,
     icon: getAssetPath('icon.png'),
     webPreferences: {
       preload: app.isPackaged
@@ -161,7 +161,9 @@ app
 
       // on click outside, hide window
       mainWindow?.once('blur', () => {
-        mainWindow?.hide();
+        if (!isDebug) {
+          mainWindow?.hide();
+        }
       });
 
       tray.setContextMenu(

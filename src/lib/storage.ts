@@ -1,21 +1,17 @@
 type Storage = {
-  VERCEL_ACCESS_TOKEN: string;
   ACCOUNTS: {
+    id: string;
     name: string;
     token: string;
-  };
+  }[];
 };
 
 export function storage() {
   return {
-    get(key: keyof Storage) {
+    get<T extends keyof Storage>(key: T): Storage[T] | undefined {
       const value = localStorage.getItem(key);
       if (value) {
-        try {
-          return JSON.parse(value);
-        } catch (error) {
-          return value;
-        }
+        return JSON.parse(value);
       }
     },
     set<T extends keyof Storage>(key: T, value: Storage[T]) {

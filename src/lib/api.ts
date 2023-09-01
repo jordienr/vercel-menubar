@@ -1,19 +1,25 @@
 import { Navigate } from 'react-router-dom';
-import { storage } from './storage';
+import { useAppStore } from '@/stores/app';
 import { Deployment } from '../../types/Deployment';
 
-export function createAPIClient() {
-  const BASE_URL = 'https://api.vercel.com';
-  const ACCESS_TOKEN = storage().get('VERCEL_ACCESS_TOKEN');
-
-  if (!ACCESS_TOKEN) {
-    console.error('No access token found');
+function getAuthToken() {
+  const account = useAppStore.getState().currentAccount;
+  if (!account) {
     Navigate({
       to: '/config',
     });
   }
+  const { token } = account!;
+
+  return token;
+}
+
+export function createAPIClient() {
+  const BASE_URL = 'https://api.vercel.com';
 
   async function _fetch(path: string, options?: RequestInit) {
+    const ACCESS_TOKEN = getAuthToken();
+
     const res = await fetch(`${BASE_URL}${path}`, {
       ...options,
       headers: {

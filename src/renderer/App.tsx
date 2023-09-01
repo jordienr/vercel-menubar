@@ -2,19 +2,17 @@ import { MemoryRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import './App.css';
 import { Deployments } from 'src/pages/Deployments';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { MainLayout } from '@/components/layout/MainLayout';
 import { Config } from '../pages/Config';
 
 function Hello() {
   return (
-    <div className="p-4">
-      <h1 className="text-2xl font-semibold window-draggable">
-        Vercel Menubar
-      </h1>
+    <MainLayout title="Vercel menubar">
       <div className="grid grid-cols-3">
         <Link to="/deployments">Deployments</Link>
         <Link to="/config">Config</Link>
       </div>
-    </div>
+    </MainLayout>
   );
 }
 

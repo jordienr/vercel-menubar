@@ -1,39 +1,86 @@
-import { storage } from 'src/lib/storage';
-import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { createId } from '@/lib/utils';
+import { useAppStore } from '@/stores/app';
+import { MainLayout } from '@/components/layout/MainLayout';
 
 export function Config() {
-  const [vat, setVat] = useState(window.localStorage.getItem('vat') || '');
+  const { accounts, addAccount, removeAccount } = useAppStore();
 
   function onSubmit(e: any) {
     e.preventDefault();
-    storage().set('VERCEL_ACCESS_TOKEN', vat);
+    const name = e.target.name.value;
+    const token = e.target.token.value;
+    const id = createId();
+
+    addAccount({
+      id,
+      name,
+      token,
+    });
+
+    e.target.reset();
   }
 
+  function deleteAccount(id: string) {
+    removeAccount(id);
+  }
   return (
-    <div className="p-4">
-      <Link to="/">Back</Link>
+    <MainLayout title="Config">
+      <div className="p-4">
+        <h2 className="text-xl font-medium mt-4">Accounts</h2>
+        {accounts?.length === 0 && <p>No accounts</p>}
+        {accounts && accounts.length > 0 && (
+          <ul className="mt-4 flex flex-col gap-4">
+            {accounts.map((account) => (
+              <li className="flex gap-4" key={account.id}>
+                <p>{account.name}</p>
+                <button
+                  className="text-sm px-2 py-1 rounded-md border"
+                  type="button"
+                  onClick={() => deleteAccount(account.id)}
+                >
+                  Delete
+                </button>
+              </li>
+            ))}
+          </ul>
+        )}
 
-      <h1 className="text-xl font-semibold">Config</h1>
-      <form className="flex flex-col mt-4" onSubmit={onSubmit}>
-        <label htmlFor="vat" className="flex flex-col">
-          Vercel Access Token
-          <input
-            className="border border-gray-300 rounded-md p-2 mt-2"
-            type="text"
-            name="vat"
-            value={vat}
-            onChange={(e) => setVat(e.target.value)}
-            id="vat"
-          />
-        </label>
-        <button
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4"
-          type="submit"
-        >
-          Save
-        </button>
-      </form>
-    </div>
+        <form className="flex flex-col mt-4 gap-3" onSubmit={onSubmit}>
+          <h3 className="text-xl font-medium">Add an account</h3>
+          <label className="label" htmlFor="name">
+            Name
+            <input
+              placeholder="Can be anything"
+              className="input"
+              type="text"
+              name="name"
+            />
+          </label>
+          <label className="label" htmlFor="token">
+            Token
+            <input
+              placeholder="Vercel Access Token"
+              className="input"
+              type="password"
+              name="token"
+            />
+            <caption className="normal-case">
+              <a
+                target="_blank"
+                className="text-blue-300 underline p-3 block"
+                href="https://vercel.com/account/tokens"
+                rel="noreferrer"
+              >
+                Create a token on Vercel.com
+              </a>
+            </caption>
+          </label>
+          <button className="btn" type="submit">
+            Add account
+          </button>
+        </form>
+      </div>
+    </MainLayout>
   );
 }

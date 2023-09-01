@@ -17,6 +17,8 @@ module.exports = {
     'no-underscore-dangle': 'off',
     'consistent-return': 'off',
     'no-console': 'off',
+    'react/jsx-props-no-spreading': 'off',
+    'react/prop-types': 'off',
   },
   parserOptions: {
     ecmaVersion: 2020,
