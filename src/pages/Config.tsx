@@ -1,7 +1,10 @@
-import { Link } from 'react-router-dom';
 import { createId } from '@/lib/utils';
 import { useAppStore } from '@/stores/app';
 import { MainLayout } from '@/components/layout/MainLayout';
+import { Label } from '@/components/ui/label';
+import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
+import { TrashIcon } from 'lucide-react';
 
 export function Config() {
   const { accounts, addAccount, removeAccount } = useAppStore();
@@ -21,6 +24,10 @@ export function Config() {
     e.target.reset();
   }
 
+  function formatToken(token: string) {
+    return `${token.slice(4, 8)}...${token.slice(-4)}`;
+  }
+
   function deleteAccount(id: string) {
     removeAccount(id);
   }
@@ -32,15 +39,22 @@ export function Config() {
         {accounts && accounts.length > 0 && (
           <ul className="mt-4 flex flex-col gap-4">
             {accounts.map((account) => (
-              <li className="flex gap-4" key={account.id}>
-                <p>{account.name}</p>
-                <button
-                  className="text-sm px-2 py-1 rounded-md border"
+              <li
+                className="flex gap-4 items-center justify-between rounded-lg p-2 hover:bg-slate-200 dark:hover:bg-slate-800"
+                key={account.id}
+              >
+                <div>
+                  <p>{account.name}</p>
+                  <p className="font-mono">{formatToken(account.token)}</p>
+                </div>
+                <Button
+                  size="icon"
+                  variant="ghost"
                   type="button"
                   onClick={() => deleteAccount(account.id)}
                 >
-                  Delete
-                </button>
+                  <TrashIcon size="16" />
+                </Button>
               </li>
             ))}
           </ul>
@@ -48,24 +62,24 @@ export function Config() {
 
         <form className="flex flex-col mt-4 gap-3" onSubmit={onSubmit}>
           <h3 className="text-xl font-medium">Add an account</h3>
-          <label className="label" htmlFor="name">
+          <Label htmlFor="name">
             Name
-            <input
+            <Input
+              className="mt-2"
               placeholder="Can be anything"
-              className="input"
               type="text"
               name="name"
             />
-          </label>
-          <label className="label" htmlFor="token">
+          </Label>
+          <Label htmlFor="token">
             Token
-            <input
+            <Input
+              className="mt-2"
               placeholder="Vercel Access Token"
-              className="input"
               type="password"
               name="token"
             />
-            <caption className="normal-case">
+            <caption className="normal-case text-left w-80">
               <a
                 target="_blank"
                 className="text-blue-300 underline p-3 block"
@@ -75,10 +89,10 @@ export function Config() {
                 Create a token on Vercel.com
               </a>
             </caption>
-          </label>
-          <button className="btn" type="submit">
+          </Label>
+          <Button variant="default" type="submit">
             Add account
-          </button>
+          </Button>
         </form>
       </div>
     </MainLayout>
