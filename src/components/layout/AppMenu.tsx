@@ -2,7 +2,6 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from 'src/components/ui/dropdown-menu';
@@ -32,7 +31,9 @@ export function AppMenu() {
           <Link to="/about">About</Link>
         </DropdownMenuItem>
         <DropdownMenuSeparator />
-        <ThemeToggle />
+        <div className="flex justify-end">
+          <ThemeToggle />
+        </div>
       </DropdownMenuContent>
     </DropdownMenu>
   );

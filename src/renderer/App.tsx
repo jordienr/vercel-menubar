@@ -3,6 +3,7 @@ import './App.css';
 import { Deployments } from 'src/pages/Deployments';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { MainLayout } from '@/components/layout/MainLayout';
+import { About } from '@/pages/About';
 import { Config } from '../pages/Config';
 
 function Hello() {
@@ -26,6 +27,7 @@ export default function App() {
           <Route path="/" element={<Hello />} />
           <Route path="/deployments" element={<Deployments />} />
           <Route path="/config" element={<Config />} />
+          <Route path="/about" element={<About />} />
         </Routes>
       </Router>
     </QueryClientProvider>
