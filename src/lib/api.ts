@@ -44,5 +44,10 @@ export function createAPIClient() {
         deployments: Deployment[];
       }> => _fetch('/v6/now/deployments'),
     },
+    projects: {
+      list: (): Promise<{
+        projects: any;
+      }> => _fetch('/v9/projects'),
+    },
   };
 }

@@ -8,3 +8,11 @@ export function useDeployments() {
 
   return query;
 }
+
+export function useProjects() {
+  const api = createAPIClient();
+
+  const query = useQuery(['projects'], api.projects.list);
+
+  return query;
+}

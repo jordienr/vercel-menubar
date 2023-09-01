@@ -1,5 +1,13 @@
 import { MainLayout } from '@/components/layout/MainLayout';
+import { useProjects } from '@/lib/queries';
 
 export function Projects() {
-  return <MainLayout title="Projects">Projects</MainLayout>;
+  const { data, isLoading } = useProjects();
+
+  if (isLoading) return <div>Loading...</div>;
+  return (
+    <MainLayout title="Projects">
+      <pre>{JSON.stringify(data)}</pre>
+    </MainLayout>
+  );
 }
