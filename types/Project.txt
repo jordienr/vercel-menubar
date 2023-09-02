@@ -1,0 +1,543 @@
+interface Response {
+  accountId: string
+  analytics?: {
+    id: string
+    canceledAt: number | null
+    disabledAt: number
+    enabledAt: number
+    paidAt?: number
+    sampleRatePercent?: number | null
+    spendLimitInDollars?: number | null
+  }
+  autoExposeSystemEnvs?: boolean
+  autoAssignCustomDomains?: boolean
+  autoAssignCustomDomainsUpdatedBy?: string
+  buildCommand?: string | null
+  commandForIgnoringBuildStep?: string | null
+  connectConfigurationId?: string | null
+  connectBuildsEnabled?: boolean
+  createdAt?: number
+  customerSupportCodeVisibility?: boolean
+  crons?: {
+    /** The time the feature was enabled for this project. Note: It enables automatically with the first Deployment that outputs cronjobs. */
+    enabledAt: number
+    /** The time the feature was disabled for this project. */
+    disabledAt: number | null
+    updatedAt: number
+    /** The ID of the Deployment from which the definitions originated. */
+    deploymentId: string | null
+    definitions: {
+      /** The hostname that should be used. */
+      host: string
+      /** The path that should be called for the cronjob. */
+      path: string
+      /** The cron expression. */
+      schedule: string
+    }[]
+  }
+  dataCache?: {
+    userDisabled: boolean
+    storageSizeBytes?: number | null
+    unlimited?: boolean
+  }
+  devCommand?: string | null
+  directoryListing: boolean
+  installCommand?: string | null
+  env?: {
+    target?:
+      | ("production" | "preview" | "development" | "preview" | "development")[]
+      | ("production" | "preview" | "development" | "preview" | "development")
+    type: "secret" | "system" | "encrypted" | "plain" | "sensitive"
+    id?: string
+    key: string
+    value: string
+    configurationId?: string | null
+    createdAt?: number
+    updatedAt?: number
+    createdBy?: string | null
+    updatedBy?: string | null
+    gitBranch?: string
+    edgeConfigId?: string | null
+    edgeConfigTokenId?: string | null
+    contentHint?:
+      | (
+          | {
+              type: "redis-url"
+              storeId: string
+            }
+          | {
+              type: "redis-rest-api-url"
+              storeId: string
+            }
+          | {
+              type: "redis-rest-api-token"
+              storeId: string
+            }
+          | {
+              type: "redis-rest-api-read-only-token"
+              storeId: string
+            }
+          | {
+              type: "blob-read-write-token"
+              storeId: string
+            }
+          | {
+              type: "postgres-url"
+              storeId: string
+            }
+          | {
+              type: "postgres-url-non-pooling"
+              storeId: string
+            }
+          | {
+              type: "postgres-prisma-url"
+              storeId: string
+            }
+          | {
+              type: "postgres-user"
+              storeId: string
+            }
+          | {
+              type: "postgres-host"
+              storeId: string
+            }
+          | {
+              type: "postgres-password"
+              storeId: string
+            }
+          | {
+              type: "postgres-database"
+              storeId: string
+            }
+        )
+      | null
+    /** Whether `value` is decrypted. */
+    decrypted?: boolean
+  }[]
+  framework?:
+    | (
+        | "blitzjs"
+        | "nextjs"
+        | "gatsby"
+        | "remix"
+        | "astro"
+        | "hexo"
+        | "eleventy"
+        | "docusaurus-2"
+        | "docusaurus"
+        | "preact"
+        | "solidstart"
+        | "dojo"
+        | "ember"
+        | "vue"
+        | "scully"
+        | "ionic-angular"
+        | "angular"
+        | "polymer"
+        | "svelte"
+        | "sveltekit"
+        | "sveltekit-1"
+        | "ionic-react"
+        | "create-react-app"
+        | "gridsome"
+        | "umijs"
+        | "sapper"
+        | "saber"
+        | "stencil"
+        | "nuxtjs"
+        | "redwoodjs"
+        | "hugo"
+        | "jekyll"
+        | "brunch"
+        | "middleman"
+        | "zola"
+        | "hydrogen"
+        | "vite"
+        | "vitepress"
+        | "vuepress"
+        | "parcel"
+        | "sanity"
+        | "storybook"
+      )
+    | null
+  gitForkProtection?: boolean
+  gitLFS?: boolean
+  id: string
+  latestDeployments?: {
+    alias?: string[]
+    aliasAssigned?: (number | boolean) | null
+    aliasError?: {
+      code: string
+      message: string
+    } | null
+    aliasFinal?: string | null
+    automaticAliases?: string[]
+    builds?: {
+      use: string
+      src?: string
+      dest?: string
+    }[]
+    connectBuildsEnabled?: boolean
+    connectConfigurationId?: string
+    createdAt: number
+    createdIn: string
+    creator: {
+      email: string
+      githubLogin?: string
+      gitlabLogin?: string
+      uid: string
+      username: string
+    } | null
+    deploymentHostname: string
+    name: string
+    forced?: boolean
+    id: string
+    meta?: { [key: string]: string }
+    monorepoManager?: string | null
+    plan: "pro" | "enterprise" | "hobby" | "oss"
+    private: boolean
+    readyState:
+      | "BUILDING"
+      | "ERROR"
+      | "INITIALIZING"
+      | "QUEUED"
+      | "READY"
+      | "CANCELED"
+    readySubstate?: "STAGED" | "PROMOTED"
+    requestedAt?: number
+    target?: string | null
+    teamId?: string | null
+    type: "LAMBDAS"
+    url: string
+    userId: string
+    withCache?: boolean
+    checksConclusion?: "succeeded" | "failed" | "skipped" | "canceled"
+    checksState?: "registered" | "running" | "completed"
+    readyAt?: number
+    buildingAt?: number
+    /** Whether or not preview comments are enabled for the deployment */
+    previewCommentsEnabled?: boolean
+  }[]
+  link?:
+    | {
+        org?: string
+        repo?: string
+        repoId?: number
+        type?: "github"
+        createdAt?: number
+        deployHooks: {
+          createdAt?: number
+          id: string
+          name: string
+          ref: string
+          url: string
+        }[]
+        gitCredentialId?: string
+        updatedAt?: number
+        sourceless?: boolean
+        productionBranch?: string
+      }
+    | {
+        projectId?: string
+        projectName?: string
+        projectNameWithNamespace?: string
+        projectNamespace?: string
+        projectUrl?: string
+        type?: "gitlab"
+        createdAt?: number
+        deployHooks: {
+          createdAt?: number
+          id: string
+          name: string
+          ref: string
+          url: string
+        }[]
+        gitCredentialId?: string
+        updatedAt?: number
+        sourceless?: boolean
+        productionBranch?: string
+      }
+    | {
+        name?: string
+        slug?: string
+        owner?: string
+        type?: "bitbucket"
+        uuid?: string
+        workspaceUuid?: string
+        createdAt?: number
+        deployHooks: {
+          createdAt?: number
+          id: string
+          name: string
+          ref: string
+          url: string
+        }[]
+        gitCredentialId?: string
+        updatedAt?: number
+        sourceless?: boolean
+        productionBranch?: string
+      }
+  name: string
+  nodeVersion: "18.x" | "16.x" | "14.x" | "12.x" | "10.x"
+  outputDirectory?: string | null
+  passwordProtection?: {
+    deploymentType: "preview" | "all"
+  } | null
+  productionDeploymentsFastLane?: boolean
+  publicSource?: boolean | null
+  rootDirectory?: string | null
+  serverlessFunctionRegion?: string | null
+  skipGitConnectDuringLink?: boolean
+  sourceFilesOutsideRootDirectory?: boolean
+  ssoProtection?: {
+    deploymentType: "preview" | "all"
+  } | null
+  targets?: {
+    [key: string]: {
+      alias?: string[]
+      aliasAssigned?: (number | boolean) | null
+      aliasError?: {
+        code: string
+        message: string
+      } | null
+      aliasFinal?: string | null
+      automaticAliases?: string[]
+      builds?: {
+        use: string
+        src?: string
+        dest?: string
+      }[]
+      connectBuildsEnabled?: boolean
+      connectConfigurationId?: string
+      createdAt: number
+      createdIn: string
+      creator: {
+        email: string
+        githubLogin?: string
+        gitlabLogin?: string
+        uid: string
+        username: string
+      } | null
+      deploymentHostname: string
+      name: string
+      forced?: boolean
+      id: string
+      meta?: { [key: string]: string }
+      monorepoManager?: string | null
+      plan: "pro" | "enterprise" | "hobby" | "oss"
+      private: boolean
+      readyState:
+        | "BUILDING"
+        | "ERROR"
+        | "INITIALIZING"
+        | "QUEUED"
+        | "READY"
+        | "CANCELED"
+      readySubstate?: "STAGED" | "PROMOTED"
+      requestedAt?: number
+      target?: string | null
+      teamId?: string | null
+      type: "LAMBDAS"
+      url: string
+      userId: string
+      withCache?: boolean
+      checksConclusion?: "succeeded" | "failed" | "skipped" | "canceled"
+      checksState?: "registered" | "running" | "completed"
+      readyAt?: number
+      buildingAt?: number
+      /** Whether or not preview comments are enabled for the deployment */
+      previewCommentsEnabled?: boolean
+    } | null
+  }
+  transferCompletedAt?: number
+  transferStartedAt?: number
+  transferToAccountId?: string
+  transferredFromAccountId?: string
+  updatedAt?: number
+  live?: boolean
+  enablePreviewFeedback?: boolean | null
+  permissions?: {
+    aliasGlobal?: __REF__ACLAction__[]
+    analyticsSampling?: __REF__ACLAction__[]
+    analyticsUsage?: __REF__ACLAction__[]
+    auditLog?: __REF__ACLAction__[]
+    billingAddress?: __REF__ACLAction__[]
+    billingInformation?: __REF__ACLAction__[]
+    billingInvoice?: __REF__ACLAction__[]
+    billingInvoiceEmailRecipient?: __REF__ACLAction__[]
+    billingInvoiceLanguage?: __REF__ACLAction__[]
+    billingPlan?: __REF__ACLAction__[]
+    billingPurchaseOrder?: __REF__ACLAction__[]
+    billingTaxId?: __REF__ACLAction__[]
+    blob?: __REF__ACLAction__[]
+    budget?: __REF__ACLAction__[]
+    cacheArtifact?: __REF__ACLAction__[]
+    cacheArtifactUsageEvent?: __REF__ACLAction__[]
+    concurrentBuilds?: __REF__ACLAction__[]
+    connect?: __REF__ACLAction__[]
+    connectConfiguration?: __REF__ACLAction__[]
+    domain?: __REF__ACLAction__[]
+    domainAcceptDelegation?: __REF__ACLAction__[]
+    domainAuthCodes?: __REF__ACLAction__[]
+    domainCertificate?: __REF__ACLAction__[]
+    domainCheckConfig?: __REF__ACLAction__[]
+    domainMove?: __REF__ACLAction__[]
+    domainPurchase?: __REF__ACLAction__[]
+    domainRecord?: __REF__ACLAction__[]
+    domainTransferIn?: __REF__ACLAction__[]
+    event?: __REF__ACLAction__[]
+    ownEvent?: __REF__ACLAction__[]
+    sensitiveEnvironmentVariablePolicy?: __REF__ACLAction__[]
+    fileUpload?: __REF__ACLAction__[]
+    gitRepository?: __REF__ACLAction__[]
+    ipBlocking?: __REF__ACLAction__[]
+    integration?: __REF__ACLAction__[]
+    integrationConfiguration?: __REF__ACLAction__[]
+    integrationConfigurationTransfer?: __REF__ACLAction__[]
+    integrationConfigurationProjects?: __REF__ACLAction__[]
+    integrationVercelConfigurationOverride?: __REF__ACLAction__[]
+    jobGlobal?: __REF__ACLAction__[]
+    logDrain?: __REF__ACLAction__[]
+    logs?: __REF__ACLAction__[]
+    logsPreset?: __REF__ACLAction__[]
+    Monitoring?: __REF__ACLAction__[]
+    monitoringQuery?: __REF__ACLAction__[]
+    monitoringChart?: __REF__ACLAction__[]
+    monitoringAlert?: __REF__ACLAction__[]
+    notificationDeploymentFailed?: __REF__ACLAction__[]
+    notificationDomainConfiguration?: __REF__ACLAction__[]
+    notificationDomainExpire?: __REF__ACLAction__[]
+    notificationDomainMoved?: __REF__ACLAction__[]
+    notificationDomainPurchase?: __REF__ACLAction__[]
+    notificationDomainRenewal?: __REF__ACLAction__[]
+    notificationDomainTransfer?: __REF__ACLAction__[]
+    notificationDomainUnverified?: __REF__ACLAction__[]
+    NotificationMonitoringAlert?: __REF__ACLAction__[]
+    notificationPaymentFailed?: __REF__ACLAction__[]
+    notificationUsageAlert?: __REF__ACLAction__[]
+    notificationCustomerBudget?: __REF__ACLAction__[]
+    openTelemetryEndpoint?: __REF__ACLAction__[]
+    paymentMethod?: __REF__ACLAction__[]
+    permissions?: __REF__ACLAction__[]
+    postgres?: __REF__ACLAction__[]
+    previewDeploymentSuffix?: __REF__ACLAction__[]
+    proTrialOnboarding?: __REF__ACLAction__[]
+    seawallConfig?: __REF__ACLAction__[]
+    sharedEnvVars?: __REF__ACLAction__[]
+    sharedEnvVarsProduction?: __REF__ACLAction__[]
+    space?: __REF__ACLAction__[]
+    spaceRun?: __REF__ACLAction__[]
+    passwordProtectionInvoiceItem?: __REF__ACLAction__[]
+    rateLimit?: __REF__ACLAction__[]
+    redis?: __REF__ACLAction__[]
+    remoteCaching?: __REF__ACLAction__[]
+    samlConfig?: __REF__ACLAction__[]
+    secret?: __REF__ACLAction__[]
+    supportCase?: __REF__ACLAction__[]
+    supportCaseComment?: __REF__ACLAction__[]
+    dataCacheBillingSettings?: __REF__ACLAction__[]
+    team?: __REF__ACLAction__[]
+    teamAccessRequest?: __REF__ACLAction__[]
+    teamFellowMembership?: __REF__ACLAction__[]
+    teamInvite?: __REF__ACLAction__[]
+    teamInviteCode?: __REF__ACLAction__[]
+    teamJoin?: __REF__ACLAction__[]
+    teamOwnMembership?: __REF__ACLAction__[]
+    teamOwnMembershipDisconnectSAML?: __REF__ACLAction__[]
+    token?: __REF__ACLAction__[]
+    usage?: __REF__ACLAction__[]
+    usageCycle?: __REF__ACLAction__[]
+    user?: __REF__ACLAction__[]
+    userConnection?: __REF__ACLAction__[]
+    webAnalyticsPlan?: __REF__ACLAction__[]
+    edgeConfig?: __REF__ACLAction__[]
+    edgeConfigItem?: __REF__ACLAction__[]
+    edgeConfigToken?: __REF__ACLAction__[]
+    webhook?: __REF__ACLAction__[]
+    "webhook-event"?: __REF__ACLAction__[]
+    endpointVerification?: __REF__ACLAction__[]
+    projectTransferIn?: __REF__ACLAction__[]
+    aliasProject?: __REF__ACLAction__[]
+    aliasProtectionBypass?: __REF__ACLAction__[]
+    connectConfigurationLink?: __REF__ACLAction__[]
+    dataCacheNamespace?: __REF__ACLAction__[]
+    deployment?: __REF__ACLAction__[]
+    deploymentCheck?: __REF__ACLAction__[]
+    deploymentCheckPreview?: __REF__ACLAction__[]
+    deploymentCheckReRunFromProductionBranch?: __REF__ACLAction__[]
+    deploymentProductionGit?: __REF__ACLAction__[]
+    deploymentPreview?: __REF__ACLAction__[]
+    deploymentPrivate?: __REF__ACLAction__[]
+    deploymentPromote?: __REF__ACLAction__[]
+    deploymentRollback?: __REF__ACLAction__[]
+    passwordProtection?: __REF__ACLAction__[]
+    job?: __REF__ACLAction__[]
+    project?: __REF__ACLAction__[]
+    projectAnalyticsSampling?: __REF__ACLAction__[]
+    projectDeploymentHook?: __REF__ACLAction__[]
+    projectDomain?: __REF__ACLAction__[]
+    projectDomainMove?: __REF__ACLAction__[]
+    projectEnvVars?: __REF__ACLAction__[]
+    projectEnvVarsProduction?: __REF__ACLAction__[]
+    projectEnvVarsUnownedByIntegration?: __REF__ACLAction__[]
+    projectIntegrationConfiguration?: __REF__ACLAction__[]
+    projectLink?: __REF__ACLAction__[]
+    projectMember?: __REF__ACLAction__[]
+    projectPermissions?: __REF__ACLAction__[]
+    projectProductionBranch?: __REF__ACLAction__[]
+    projectTransfer?: __REF__ACLAction__[]
+    projectTransferOut?: __REF__ACLAction__[]
+    projectProtectionBypass?: __REF__ACLAction__[]
+    projectUsage?: __REF__ACLAction__[]
+    projectAnalyticsUsage?: __REF__ACLAction__[]
+    analytics?: __REF__ACLAction__[]
+    trustedIps?: __REF__ACLAction__[]
+    webAnalytics?: __REF__ACLAction__[]
+  }
+  lastRollbackTarget?: { [key: string]: unknown } | null
+  lastAliasRequest?: {
+    fromDeploymentId: string
+    toDeploymentId: string
+    jobStatus: "succeeded" | "failed" | "skipped" | "pending" | "in-progress"
+    requestedAt: number
+    type: "promote" | "rollback"
+  } | null
+  hasFloatingAliases?: boolean
+  protectionBypass?: {
+    [key: string]:
+      | {
+          createdAt: number
+          createdBy: string
+          scope: "shareable-link" | "automation-bypass"
+        }
+      | {
+          createdAt: number
+          lastUpdatedAt: number
+          lastUpdatedBy: string
+          access: "requested" | "granted"
+          scope: "user"
+        }
+  }
+  hasActiveBranches?: boolean
+  trustedIps?:
+    | (
+        | {
+            deploymentType: "preview" | "all" | "production"
+            addresses: {
+              value: string
+              note?: string
+            }[]
+            protectionMode: "additional" | "exclusive"
+          }
+        | {
+            deploymentType: "preview" | "all" | "production"
+          }
+      )
+    | null
+  gitComments?: {
+    /** Whether the Vercel bot should comment on PRs */
+    onPullRequest: boolean
+    /** Whether the Vercel bot should comment on commits */
+    onCommit: boolean
+  }
+}

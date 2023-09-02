@@ -22,3 +22,12 @@ export function useProjects() {
 
   return query;
 }
+
+export function useTeams() {
+  const api = createAPIClient();
+  const { currentAccount } = useAppStore();
+
+  const query = useQuery(['teams', currentAccount?.id], api.teams.list);
+
+  return query;
+}

@@ -9,6 +9,9 @@ export function Projects() {
       {data?.projects.map((proj: any) => (
         <div key={proj.id} className="">
           <h3 className="p-2">{proj.name}</h3>
+          <pre className="overflow-scroll p-2 border">
+            -{JSON.stringify(proj, null, 2)}
+          </pre>
         </div>
       ))}
     </MainLayout>

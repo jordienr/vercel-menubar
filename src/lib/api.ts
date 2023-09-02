@@ -49,5 +49,10 @@ export function createAPIClient() {
         projects: any;
       }> => _fetch('/v9/projects'),
     },
+    teams: {
+      list: (): Promise<{
+        teams: any;
+      }> => _fetch('/v2/teams'),
+    },
   };
 }
