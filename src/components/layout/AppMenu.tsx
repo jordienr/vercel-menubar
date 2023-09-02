@@ -40,8 +40,8 @@ export function AppMenu() {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="mr-3">
-        <LinkItem to="/deployments" Icon={ServerIcon} label="Deployments" />
         <LinkItem to="/projects" Icon={FoldersIcon} label="Projects" />
+        <LinkItem to="/deployments" Icon={ServerIcon} label="Deployments" />
         <LinkItem to="/settings" Icon={SettingsIcon} label="Settings" />
         <DropdownMenuSeparator />
         <div className="flex justify-end">

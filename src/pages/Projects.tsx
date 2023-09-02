@@ -2,13 +2,12 @@ import { MainLayout } from '@/components/layout/MainLayout';
 import { useProjects } from '@/lib/queries';
 
 export function Projects() {
-  // const { data, isLoading } = useProjects();
+  const { data, isLoading } = useProjects();
 
-  // if (isLoading) return <div>Loading...</div>;
   return (
-    <MainLayout title="Projects">
+    <MainLayout title="Projects" loading={isLoading}>
       projects
-      {/* <pre>{JSON.stringify(data)}</pre> */}
+      <pre>{JSON.stringify(data)}</pre>
     </MainLayout>
   );
 }

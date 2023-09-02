@@ -22,8 +22,7 @@ export function Deployments() {
   const { data, isLoading } = useDeployments();
 
   return (
-    <MainLayout title="Deployments">
-      {isLoading && <p className="p-3">Loading...</p>}
+    <MainLayout loading={isLoading} title="Deployments">
       <div className="flex flex-col mt-4 p-3">
         {data?.deployments.map((dep) => {
           return (
