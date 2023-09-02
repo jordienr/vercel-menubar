@@ -12,7 +12,7 @@ export function MainLayout({
   return (
     <div className="bg-slate-100 dark:bg-slate-900 text-slate-800 dark:text-slate-100 flex flex-col h-screen">
       <ThemeProvider defaultTheme="dark" storageKey="vmb-theme">
-        <div className="flex p-3 justify-between items-center gap-3 border-b">
+        <div className="flex p-1 px-3 justify-between items-center gap-3 border-b dark:border-slate-800">
           <Link
             to="/"
             className="h-10 px-1 flex items-center justify-center text-slate-700 dark:text-slate-300"

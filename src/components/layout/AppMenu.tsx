@@ -8,24 +8,22 @@ import {
 import { SettingsIcon } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { ThemeToggle } from './ThemeToggle';
+import { Button } from '../ui/button';
 
 export function AppMenu() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger>
-        <button
-          type="button"
-          className="border p-2 rounded-lg hover:bg-slate-200/50"
-        >
+        <Button variant="ghost" size="icon" type="button">
           <SettingsIcon size="16" />
-        </button>
+        </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="mr-3">
         <DropdownMenuItem>
           <Link to="/deployments">Deployments</Link>
         </DropdownMenuItem>
         <DropdownMenuItem>
-          <Link to="/config">Config</Link>
+          <Link to="/settings">Settings</Link>
         </DropdownMenuItem>
         <DropdownMenuItem>
           <Link to="/about">About</Link>

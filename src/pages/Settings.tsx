@@ -6,7 +6,7 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { TrashIcon } from 'lucide-react';
 
-export function Config() {
+export function Settings() {
   const { accounts, addAccount, removeAccount } = useAppStore();
 
   function onSubmit(e: any) {

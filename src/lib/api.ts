@@ -4,9 +4,9 @@ import { Deployment } from '../../types/Deployment';
 
 function getAuthToken() {
   const account = useAppStore.getState().currentAccount;
-  if (!account) {
+  if (!account || !account.token) {
     Navigate({
-      to: '/config',
+      to: '/settings',
     });
   }
   const { token } = account!;
