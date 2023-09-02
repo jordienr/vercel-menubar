@@ -28,7 +28,7 @@ export function Deployments() {
           return (
             <div
               key={dep.createdAt}
-              className="p-4 font-mono text-sm hover:bg-slate-700/30 rounded-xl"
+              className="p-4 font-mono text-sm hover:bg-slate-300/20 rounded-xl"
             >
               <div className="flex items-center justify-between gap-2">
                 <div className="flex gap-2 items-center">
