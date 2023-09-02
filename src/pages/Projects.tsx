@@ -7,7 +7,7 @@ export function Projects() {
   return (
     <MainLayout title="Projects" loading={isLoading}>
       {data?.projects.map((proj: any) => (
-        <div className="">
+        <div key={proj.id} className="">
           <h3 className="p-2">{proj.name}</h3>
         </div>
       ))}

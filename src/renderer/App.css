@@ -13,6 +13,7 @@
 body {
   -webkit-user-select: none;
 }
+
 .h1 {
   font-size: theme('fontSize.2xl');
   font-weight: theme('fontWeight.medium');

@@ -1,3 +1,4 @@
+/* eslint-disable react/require-default-props */
 import { PropsWithChildren } from 'react';
 import { Link } from 'react-router-dom';
 import { HomeIcon } from 'lucide-react';
@@ -9,10 +10,10 @@ import { AccountPicker } from './AccountPicker';
 export function MainLayout({
   children,
   title,
-  loading,
-}: PropsWithChildren<{ title: string; loading: boolean }>) {
+  loading = false,
+}: PropsWithChildren<{ title: string; loading?: boolean }>) {
   return (
-    <div className="bg-slate-100  dark:bg-black text-slate-800 dark:text-slate-100 flex flex-col h-screen">
+    <div className="app-wrapper bg-slate-100  dark:bg-black text-slate-800 dark:text-slate-100 flex flex-col h-screen">
       <ThemeProvider defaultTheme="dark" storageKey="vmb-theme">
         {loading ? (
           <div className="flex h-screen w-screen justify-center items-center animate-spin text-4xl">
