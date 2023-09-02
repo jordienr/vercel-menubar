@@ -5,6 +5,9 @@ type Account = {
   id: string;
   name: string;
   token: string;
+  color: {
+    value: string;
+  };
 };
 
 interface AppStore {

@@ -5,7 +5,7 @@ import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { TrashIcon } from 'lucide-react';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import {
   Dialog,
   DialogTrigger,
@@ -52,6 +52,7 @@ export function Settings() {
     },
   ];
 
+  const [showAccDialog, setShowAccDialog] = useState(false);
   const [selectedColor, setSelectedColor] = useState(colors[0]);
   const { accounts, addAccount, removeAccount } = useAppStore();
 
@@ -59,14 +60,17 @@ export function Settings() {
     e.preventDefault();
     const name = e.target.name.value;
     const token = e.target.token.value;
+    const color = selectedColor;
     const id = createId();
 
     addAccount({
       id,
       name,
       token,
+      color,
     });
 
+    setShowAccDialog(false);
     e.target.reset();
   }
 
@@ -83,15 +87,23 @@ export function Settings() {
         <h2 className="font-medium">Accounts</h2>
         {accounts?.length === 0 && <p>No accounts</p>}
         {accounts && accounts.length > 0 && (
-          <ul className="mt-4 flex flex-col gap-4">
+          <ul className="mt-4 flex flex-col">
             {accounts.map((account) => (
               <li
                 className="flex gap-4 items-center justify-between rounded-lg p-2 hover:bg-slate-200 dark:hover:bg-slate-800"
                 key={account.id}
               >
-                <div>
-                  <p>{account.name}</p>
-                  <p className="font-mono">{formatToken(account.token)}</p>
+                <div className="flex gap-4 items-center">
+                  <div
+                    className="h-8 w-8 p-2 flex justify-center items-center rounded-xl"
+                    style={{
+                      backgroundColor: account.color.value,
+                    }}
+                  />
+                  <div>
+                    <p>{account.name}</p>
+                    <p className="font-mono">{formatToken(account.token)}</p>
+                  </div>
                 </div>
                 <Button
                   size="icon"
@@ -105,7 +117,7 @@ export function Settings() {
             ))}
           </ul>
         )}
-        <Dialog>
+        <Dialog open={showAccDialog} onOpenChange={setShowAccDialog}>
           <DialogTrigger>
             <Button variant="default" className="mt-4">
               Add account
