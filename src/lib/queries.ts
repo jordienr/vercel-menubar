@@ -16,8 +16,9 @@ export function useDeployments() {
 
 export function useProjects() {
   const api = createAPIClient();
+  const { currentAccount } = useAppStore();
 
-  const query = useQuery(['projects'], api.projects.list);
+  const query = useQuery(['projects', currentAccount?.id], api.projects.list);
 
   return query;
 }

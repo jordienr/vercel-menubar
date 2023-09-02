@@ -12,7 +12,7 @@ export function MainLayout({
   loading,
 }: PropsWithChildren<{ title: string; loading: boolean }>) {
   return (
-    <div className="bg-slate-100 dark:bg-black text-slate-800 dark:text-slate-100 flex flex-col h-screen">
+    <div className="bg-slate-100  dark:bg-black text-slate-800 dark:text-slate-100 flex flex-col h-screen">
       <ThemeProvider defaultTheme="dark" storageKey="vmb-theme">
         {loading ? (
           <div className="flex h-screen w-screen justify-center items-center animate-spin text-4xl">
@@ -20,14 +20,14 @@ export function MainLayout({
           </div>
         ) : (
           <>
-            <div className="flex p-1 px-3 justify-between items-center gap-3 dark:border-slate-800">
+            <div className="flex p-1 px-3 justify-between items-center gap-3 dark:border-slate-800 border-b">
               <Link
                 to="/"
                 className="h-10 px-1 flex items-center justify-center text-slate-700 dark:text-slate-300"
               >
                 <HomeIcon size="16" />
               </Link>
-              <h1 className="text-xl font-medium w-full window-draggable">
+              <h1 className="text-xl font-medium w-full draggable-area">
                 {title}
               </h1>
               <div className="flex gap-2">

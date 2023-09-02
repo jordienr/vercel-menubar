@@ -84,9 +84,11 @@ const createWindow = async () => {
     show: false,
     width: 420,
     height: 600,
-    titleBarStyle: 'customButtonsOnHover',
+    titleBarStyle: 'hidden',
     alwaysOnTop: true,
     icon: getAssetPath('icon.png'),
+    transparent: true,
+    frame: false,
     webPreferences: {
       preload: app.isPackaged
         ? path.join(__dirname, 'preload.js')

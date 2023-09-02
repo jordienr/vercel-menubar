@@ -6,7 +6,7 @@
   opacity: 0;
   width: 0;
 }
-.window-draggable {
+.draggable-area {
   -webkit-app-region: drag;
 }
 

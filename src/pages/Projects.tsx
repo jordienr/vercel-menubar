@@ -6,8 +6,11 @@ export function Projects() {
 
   return (
     <MainLayout title="Projects" loading={isLoading}>
-      projects
-      <pre>{JSON.stringify(data)}</pre>
+      {data?.projects.map((proj: any) => (
+        <div className="">
+          <h3 className="p-2">{proj.name}</h3>
+        </div>
+      ))}
     </MainLayout>
   );
 }
