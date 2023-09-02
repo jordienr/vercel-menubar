@@ -10,7 +10,7 @@ export function MainLayout({
   title,
 }: PropsWithChildren<{ title: string }>) {
   return (
-    <div className="bg-slate-100 dark:bg-slate-900 text-slate-800 dark:text-slate-100 flex flex-col h-screen">
+    <div className="bg-slate-100 dark:bg-black text-slate-800 dark:text-slate-100 flex flex-col h-screen">
       <ThemeProvider defaultTheme="dark" storageKey="vmb-theme">
         <div className="flex p-1 px-3 justify-between items-center gap-3 border-b dark:border-slate-800">
           <Link
