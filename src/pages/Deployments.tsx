@@ -2,6 +2,8 @@ import { useDeployments } from 'src/lib/queries';
 import { formatDate } from 'src/lib/dates';
 import { MainLayout } from '@/components/layout/MainLayout';
 import { ExternalLink } from 'lucide-react';
+import { useLocation } from 'react-router-dom';
+import { Debug } from '@/components/Debug';
 import { Deployment } from '../../types/Deployment';
 
 function StatusDot({ state }: { state: Deployment['state'] }) {
@@ -20,10 +22,11 @@ function StatusDot({ state }: { state: Deployment['state'] }) {
 
 export function Deployments() {
   const { data, isLoading } = useDeployments();
-
+  const location = useLocation();
   return (
     <MainLayout loading={isLoading} title="Deployments">
       <div className="flex flex-col p-3">
+        {/* <Debug data={location} /> */}
         {data?.deployments.map((dep) => {
           return (
             <a

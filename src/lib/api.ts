@@ -3,13 +3,13 @@ import { useAppStore } from '@/stores/app';
 import { Deployment } from '../../types/Deployment';
 
 function getAuthToken() {
-  const account = useAppStore.getState().currentAccount;
-  if (!account || !account.token) {
+  const { accounts } = useAppStore.getState();
+  if (!accounts) {
     Navigate({
       to: '/settings',
     });
   }
-  const { token } = account!;
+  const { token } = accounts[0]!;
 
   return token;
 }
@@ -17,10 +17,17 @@ function getAuthToken() {
 export function createAPIClient() {
   const BASE_URL = 'https://api.vercel.com';
 
-  async function _fetch(path: string, options?: RequestInit) {
+  async function _fetch(
+    path: string,
+    options?: RequestInit & { query: Record<string, string> }
+  ) {
     const ACCESS_TOKEN = getAuthToken();
 
-    const res = await fetch(`${BASE_URL}${path}`, {
+    const _QUERY = new URLSearchParams(options?.query);
+
+    const _URL = `${BASE_URL}${path}?${_QUERY}`;
+
+    const res = await fetch(_URL, {
       ...options,
       headers: {
         ...options?.headers,
@@ -40,9 +47,18 @@ export function createAPIClient() {
 
   return {
     deployments: {
-      list: (): Promise<{
+      list: ({
+        teamId,
+      }: {
+        teamId: string;
+      }): Promise<{
         deployments: Deployment[];
-      }> => _fetch('/v6/now/deployments'),
+      }> =>
+        _fetch('/v6/now/deployments', {
+          query: {
+            teamId,
+          },
+        }),
     },
     projects: {
       list: (): Promise<{
@@ -53,6 +69,11 @@ export function createAPIClient() {
       list: (): Promise<{
         teams: any;
       }> => _fetch('/v2/teams'),
+    },
+    user: {
+      get: (): Promise<{
+        user: any;
+      }> => _fetch('/v2/user'),
     },
   };
 }

@@ -36,11 +36,11 @@ export function AppMenu() {
     <DropdownMenu>
       <DropdownMenuTrigger>
         <Button variant="ghost" size="icon" type="button">
-          <SettingsIcon size="16" />
+          <SettingsIcon size="20" />
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="mr-3">
-        <LinkItem to="/projects" Icon={FoldersIcon} label="Projects" />
+        {/* <LinkItem to="/projects" Icon={FoldersIcon} label="Projects" /> */}
         <LinkItem to="/deployments" Icon={ServerIcon} label="Deployments" />
         <LinkItem to="/settings" Icon={SettingsIcon} label="Settings" />
         <DropdownMenuSeparator />

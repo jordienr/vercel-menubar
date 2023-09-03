@@ -85,7 +85,6 @@ const createWindow = async () => {
     width: 420,
     height: 600,
     titleBarStyle: 'hidden',
-    alwaysOnTop: true,
     icon: getAssetPath('icon.png'),
     transparent: true,
     frame: false,

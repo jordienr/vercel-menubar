@@ -1,4 +1,3 @@
-import { Debug } from '@/components/Debug';
 import { MainLayout } from '@/components/layout/MainLayout';
 import { useTeams } from '@/lib/queries';
 
