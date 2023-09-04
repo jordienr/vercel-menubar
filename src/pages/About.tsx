@@ -3,20 +3,39 @@ import { MainLayout } from '@/components/layout/MainLayout';
 export function About() {
   return (
     <MainLayout title="About">
-      <div className="flex flex-col gap-4 p-4">
-        <h1 className="text-xl font-medium">Vercel Menubar</h1>
-        <p className="body-text">
+      <div className="prose p-4">
+        <h1>Vercel Menubar</h1>
+        <p>
           Vercel Menubar is an open source project created by{' '}
-          <a className="link" href="https://github.com/jordienr">
-            Jordi Enric
-          </a>
+          <a href="https://github.com/jordienr">Jordi Enric</a>
         </p>
-        <p className="body-text">
+        <p>
           You can find the source code for this project on{' '}
-          <a className="link" href="https://github.com/jordienr/vercel-menubar">
-            Github{' '}
-          </a>
+          <a href="https://github.com/jordienr/vercel-menubar">Github </a>
         </p>
+        <h2>Special thanks</h2>
+        <ul>
+          <li>
+            Shadcn for creating <a href="https://ui.shadcn.com/">Shadcn UI</a>
+          </li>
+          <li>
+            <a href="https://twitter.com/emilkowalski_">Emil Kowalski</a> for
+            creating <a href="https://sonner.emilkowal.ski/">Sonner</a>
+          </li>
+          <li>
+            <a href="https://github.com/electron-react-boilerplate/electron-react-boilerplate">
+              Electron React Boilerplate
+            </a>
+          </li>
+          <li>
+            <a href="https://tailwindcss.com/">TailwindCSS</a>
+          </li>
+          <li>
+            <a href="https://tanstack.com/query/v3/">
+              React Query by the Tan Stack team
+            </a>
+          </li>
+        </ul>
       </div>
     </MainLayout>
   );

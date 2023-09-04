@@ -1,10 +1,6 @@
 /* eslint-disable react/require-default-props */
 import { PropsWithChildren } from 'react';
-import { Link } from 'react-router-dom';
-import { HomeIcon } from 'lucide-react';
-
 import { ThemeProvider } from './ThemeProvider';
-import { AppMenu } from './AppMenu';
 import { AccountPicker } from './AccountPicker';
 
 export function MainLayout({
