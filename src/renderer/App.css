@@ -17,3 +17,11 @@ body {
 .hover-bg {
   @apply hover:bg-slate-200/70 hover:dark:bg-slate-700/70;
 }
+
+.body-text {
+  @apply text-slate-500 dark:text-slate-300;
+}
+
+.link {
+  @apply text-blue-500 dark:text-blue-300 underline;
+}

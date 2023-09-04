@@ -86,7 +86,6 @@ const createWindow = async () => {
     height: 600,
     titleBarStyle: 'hidden',
     icon: getAssetPath('icon.png'),
-    transparent: true,
     frame: false,
     webPreferences: {
       preload: app.isPackaged
