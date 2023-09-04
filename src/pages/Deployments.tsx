@@ -32,7 +32,7 @@ export function Deployments() {
             <a
               key={dep.createdAt}
               target="_blank"
-              className="flex justify-between w-full  p-2 rounded-md group hover:bg-slate-200/50 dark:hover:bg-slate-700/50 text-sm gap-2 items-center font-mono"
+              className="grid grid-cols-3 justify-between w-full  p-2 rounded-md group hover:bg-slate-200/50 dark:hover:bg-slate-700/50 text-sm gap-2 items-center font-mono"
               href={`${dep.inspectorUrl}`}
               rel="noreferrer"
               title={`${dep.inspectorUrl}`}
@@ -40,13 +40,11 @@ export function Deployments() {
               <div>
                 <div className="flex items-center gap-2">
                   <StatusDot state={dep.state} />
-                  <div className="font-semibold font-sans text-lg">
-                    {dep.name}
-                  </div>
+                  <div className="font-semibold font-sans">{dep.name}</div>
                 </div>
                 <div className="ml-4 text-slate-400">{dep.target}</div>
               </div>
-              <div>
+              <div className="text-xs">
                 <div className="text-slate-400">
                   {formatDate(new Date(dep.created), 'DD/MM/YY HH:mm')}d
                 </div>
@@ -54,7 +52,7 @@ export function Deployments() {
                   @{dep.creator.username}
                 </span>
               </div>
-              <div className="pr-3">
+              <div className="pr-3 ml-auto">
                 <ExternalLink
                   size="16"
                   className="text-slate-400 flex items-center"

@@ -3,7 +3,7 @@ import { Button } from 'src/components/ui/button';
 import { useTheme } from 'src/components/layout/ThemeProvider';
 
 export function ThemeToggle() {
-  const { setTheme } = useTheme();
+  const { setTheme, theme } = useTheme();
 
   return (
     <div className="flex gap-1">

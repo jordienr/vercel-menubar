@@ -1,20 +1,29 @@
 import { Navigate } from 'react-router-dom';
 import { useAppStore } from '@/stores/app';
+import { toast } from 'sonner';
 import { Deployment } from '../../types/Deployment';
 
 function getAuthToken() {
-  const { accounts } = useAppStore.getState();
-  if (!accounts) {
+  const { accessTokens, currentAccessToken, setCurrentAccessToken } =
+    useAppStore.getState();
+  if (!accessTokens) {
     Navigate({
       to: '/settings',
     });
   }
-  const { token } = accounts[0]!;
 
-  return token;
+  // If there is no current access token, set the first one as the current one
+  if (!currentAccessToken && accessTokens.length > 0) {
+    setCurrentAccessToken(accessTokens[0]);
+  }
+
+  return currentAccessToken?.token;
 }
 
-export function createAPIClient() {
+type CreateAPIClientArgs = {
+  onErrorToastMessage?: string;
+};
+export function createAPIClient({ onErrorToastMessage }: CreateAPIClientArgs) {
   const BASE_URL = 'https://api.vercel.com';
 
   async function _fetch(
@@ -37,6 +46,7 @@ export function createAPIClient() {
     });
 
     if (!res.ok) {
+      toast.error(onErrorToastMessage);
       throw new Error(await res.text());
     }
 

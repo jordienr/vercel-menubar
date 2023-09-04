@@ -1,6 +1,6 @@
 import { Link, useLocation } from 'react-router-dom';
 import { useTeams, useUser } from '@/lib/queries';
-import { LucideIcon, SettingsIcon } from 'lucide-react';
+import { LucideIcon, SettingsIcon, UserIcon } from 'lucide-react';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -74,6 +74,7 @@ export function AccountPicker() {
             ))}
         <DropdownMenuSeparator />
         <LinkItem to="/settings" Icon={SettingsIcon} label="Settings" />
+        <LinkItem to="/about" Icon={UserIcon} label="About" />
         <DropdownMenuSeparator />
         <div className="flex justify-end">
           <ThemeToggle />

@@ -1,42 +1,39 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
-type Account = {
+type AccessToken = {
   id: string;
   name: string;
   token: string;
-  color: {
-    value: string;
-  };
 };
 
 interface AppStore {
-  accounts: Account[];
-  currentAccount: Account | undefined;
-  setCurrentAccount: (account: Account) => void;
-  addAccount: (account: Account) => void;
-  removeAccount: (id: string) => void;
+  accessTokens: AccessToken[];
+  currentAccessToken: AccessToken | undefined;
+  setCurrentAccessToken: (at: AccessToken) => void;
+  addAccessToken: (at: AccessToken) => void;
+  removeAccessToken: (token: AccessToken) => void;
 }
 
 export const useAppStore = create<AppStore>()(
   persist(
     (set, get) => ({
-      accounts: [],
-      currentAccount: undefined,
-      setCurrentAccount: (account: Account) => {
-        set({ currentAccount: account });
+      accessTokens: [],
+      currentAccessToken: undefined,
+      setCurrentAccessToken: (at: AccessToken) => {
+        set({ currentAccessToken: at });
       },
-      getAccounts: () => {
-        const { accounts } = get();
-        return accounts;
+      addAccessToken: (at: AccessToken) => {
+        set((state) => ({
+          accessTokens: [...state.accessTokens, at],
+        }));
       },
-      addAccount: (account: Account) => {
-        const { accounts } = get();
-        set({ accounts: [...accounts, account] });
-      },
-      removeAccount: (id: string) => {
-        const { accounts } = get();
-        set({ accounts: accounts.filter((account) => account.id !== id) });
+      removeAccessToken: (token: AccessToken) => {
+        set((state) => ({
+          accessTokens: state.accessTokens.filter(
+            (at) => at.token !== token.token
+          ),
+        }));
       },
     }),
     {

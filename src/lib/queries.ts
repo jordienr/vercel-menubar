@@ -11,7 +11,9 @@ function useURLQuery() {
 }
 
 export function useDeployments() {
-  const api = createAPIClient();
+  const api = createAPIClient({
+    onErrorToastMessage: 'Failed to fetch deployments',
+  });
   const URLQuery = useURLQuery();
 
   const teamId = URLQuery.get('teamId') || '';
@@ -25,29 +27,24 @@ export function useDeployments() {
   return query;
 }
 
-export function useProjects() {
-  const api = createAPIClient();
-  const { currentAccount } = useAppStore();
-
-  const query = useQuery(['projects', currentAccount?.id], api.projects.list);
-
-  return query;
-}
-
 export function useTeams() {
-  const api = createAPIClient();
-  const { currentAccount } = useAppStore();
+  const api = createAPIClient({
+    onErrorToastMessage: 'Failed to fetch teams',
+  });
+  const { currentAccessToken } = useAppStore();
 
-  const query = useQuery(['teams', currentAccount?.id], api.teams.list);
+  const query = useQuery(['teams', currentAccessToken?.id], api.teams.list);
 
   return query;
 }
 
 export function useUser() {
-  const api = createAPIClient();
-  const { currentAccount } = useAppStore();
+  const api = createAPIClient({
+    onErrorToastMessage: 'Failed to fetch user',
+  });
+  const { currentAccessToken } = useAppStore();
 
-  const query = useQuery(['user', currentAccount?.id], api.user.get);
+  const query = useQuery(['user', currentAccessToken?.id], api.user.get);
 
   return query;
 }

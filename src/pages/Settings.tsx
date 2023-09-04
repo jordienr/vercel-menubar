@@ -4,7 +4,7 @@ import { MainLayout } from '@/components/layout/MainLayout';
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import { TrashIcon } from 'lucide-react';
+import { CheckCheckIcon, CheckCircle, TrashIcon } from 'lucide-react';
 import React, { useState } from 'react';
 import {
   Dialog,
@@ -15,6 +15,7 @@ import {
 } from '@/components/ui/dialog';
 import { DialogDescription } from '@radix-ui/react-dialog';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
+import { IconBase } from 'react-icons';
 
 export function Settings() {
   const colors = [
@@ -54,20 +55,24 @@ export function Settings() {
 
   const [showAccDialog, setShowAccDialog] = useState(false);
   const [selectedColor, setSelectedColor] = useState(colors[0]);
-  const { accounts, addAccount, removeAccount } = useAppStore();
+  const {
+    accessTokens,
+    addAccessToken,
+    removeAccessToken,
+    currentAccessToken,
+    setCurrentAccessToken,
+  } = useAppStore();
 
   function onSubmit(e: any) {
     e.preventDefault();
     const name = e.target.name.value;
     const token = e.target.token.value;
-    const color = selectedColor;
     const id = createId();
 
-    addAccount({
+    addAccessToken({
       id,
       name,
       token,
-      color,
     });
 
     setShowAccDialog(false);
@@ -78,38 +83,48 @@ export function Settings() {
     return `${token.slice(4, 8)}...${token.slice(-4)}`;
   }
 
-  function deleteAccount(id: string) {
-    removeAccount(id);
+  function deleteAccount(token: typeof currentAccessToken) {
+    if (!token) return;
+    removeAccessToken(token);
   }
   return (
-    <MainLayout title="Config">
+    <MainLayout title="Settings">
       <div className="p-4">
         <h2 className="font-medium">Accounts</h2>
-        {accounts?.length === 0 && <p>No accounts</p>}
-        {accounts && accounts.length > 0 && (
+        <p className="text-slate-500">
+          Here you can switch between different tokens in case you have more
+          than one vercel account.
+        </p>
+        {accessTokens?.length === 0 && <p>No access tokens found</p>}
+        {accessTokens && accessTokens.length > 0 && (
           <ul className="mt-4 flex flex-col">
-            {accounts.map((account) => (
+            {accessTokens.map((at) => (
               <li
-                className="flex gap-4 items-center justify-between rounded-lg p-2 hover:bg-slate-200 dark:hover:bg-slate-800"
-                key={account.id}
+                className="flex gap-2 items-center justify-between rounded-lg p-2 hover:bg-slate-200 dark:hover:bg-slate-800"
+                key={at.id}
               >
-                <div className="flex gap-4 items-center">
-                  <div
-                    className="h-8 w-8 p-2 flex justify-center items-center rounded-xl"
-                    style={{
-                      backgroundColor: account.color.value,
-                    }}
-                  />
-                  <div>
-                    <p>{account.name}</p>
-                    <p className="font-mono">{formatToken(account.token)}</p>
+                <button
+                  className="flex gap-3 items-center flex-1"
+                  type="button"
+                  onClick={() => setCurrentAccessToken(at)}
+                >
+                  {currentAccessToken?.id === at.id && (
+                    <span className="text-green-500 bg-green-100 rounded-full p-1 border border-green-300">
+                      <CheckCircle />
+                    </span>
+                  )}
+                  <div className="text-left">
+                    <p className="font-medium">{at.name}</p>
+                    <p className="font-mono font-slate-400">
+                      {formatToken(at.token)}
+                    </p>
                   </div>
-                </div>
+                </button>
                 <Button
                   size="icon"
                   variant="ghost"
                   type="button"
-                  onClick={() => deleteAccount(account.id)}
+                  onClick={() => deleteAccount(at)}
                 >
                   <TrashIcon size="16" />
                 </Button>
@@ -120,15 +135,17 @@ export function Settings() {
         <Dialog open={showAccDialog} onOpenChange={setShowAccDialog}>
           <DialogTrigger>
             <Button variant="default" className="mt-4">
-              Add account
+              Add access token
             </Button>
           </DialogTrigger>
           <DialogContent className="max-w-[90vw]">
             <DialogHeader>
-              <DialogHeader>Add account</DialogHeader>
-              <DialogDescription>
-                Add your vercel accounts here. The token will be stored in your
-                computer.
+              <DialogHeader className="text-lg font-medium">
+                Add access token
+              </DialogHeader>
+              <DialogDescription className="text-slate-500">
+                The token will be stored in your computer and only be used to
+                request data from Vercel API.
               </DialogDescription>
             </DialogHeader>
 
@@ -149,7 +166,7 @@ export function Settings() {
                 Access Token
                 <Input
                   className="mt-2"
-                  placeholder="Create a token on vercel.com"
+                  placeholder="Get your token on vercel.com"
                   type="password"
                   name="token"
                 />
@@ -164,47 +181,9 @@ export function Settings() {
                   </a>
                 </caption>
               </Label>
-              <Label htmlFor="color">
-                Color
-                <RadioGroup className="flex mt-2 gap-1 flex-wrap items-center">
-                  {colors.map((color) => (
-                    <Label
-                      className={`flex justify-center items-center rounded-2xl gap-2 p-1 transition-all active:scale-75 ${
-                        color.value === selectedColor.value ? '' : ''
-                      }`}
-                      htmlFor={color.value}
-                      onClick={() => setSelectedColor(color)}
-                      style={{
-                        outline: '2px solid',
-                        outlineOffset: '-2px',
-                        outlineColor:
-                          color.value === selectedColor.value
-                            ? color.value
-                            : 'transparent',
-                      }}
-                    >
-                      <RadioGroupItem
-                        key={color.value}
-                        id={color.value}
-                        value={color.value}
-                        className="sr-only"
-                      />
-                      <div
-                        className="h-8 w-8 p-2 flex justify-center items-center rounded-xl"
-                        style={{
-                          backgroundColor: color.value,
-                        }}
-                      />
-                      <span className="text-sm font-mono sr-only">
-                        {color.name}
-                      </span>
-                    </Label>
-                  ))}
-                </RadioGroup>
-              </Label>
               <DialogFooter>
                 <Button variant="default" type="submit">
-                  Add account
+                  Add access token
                 </Button>
               </DialogFooter>
             </form>
