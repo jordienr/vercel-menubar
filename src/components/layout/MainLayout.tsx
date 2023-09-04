@@ -13,7 +13,7 @@ export function MainLayout({
   loading = false,
 }: PropsWithChildren<{ title: string; loading?: boolean }>) {
   return (
-    <div className="app-wrapper bg-slate-100  dark:bg-black/90 text-slate-800 dark:text-slate-100 flex flex-col h-screen">
+    <div className="app-wrapper bg-slate-100  dark:bg-black text-slate-800 dark:text-slate-100 flex flex-col h-screen">
       <ThemeProvider defaultTheme="dark" storageKey="vmb-theme">
         {loading ? (
           <div className="flex h-screen w-screen justify-center items-center animate-spin text-4xl">
