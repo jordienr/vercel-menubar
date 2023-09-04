@@ -6,7 +6,7 @@ import { Deployment } from '../../types/Deployment';
 function getAuthToken() {
   const { accessTokens, currentAccessToken, setCurrentAccessToken } =
     useAppStore.getState();
-  if (!accessTokens) {
+  if (!accessTokens || accessTokens.length === 0) {
     Navigate({
       to: '/settings',
     });

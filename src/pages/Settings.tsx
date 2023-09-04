@@ -4,8 +4,8 @@ import { MainLayout } from '@/components/layout/MainLayout';
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import { CheckCheckIcon, CheckCircle, TrashIcon } from 'lucide-react';
-import React, { useState } from 'react';
+import { CheckCircle2, TrashIcon } from 'lucide-react';
+import { useState } from 'react';
 import {
   Dialog,
   DialogTrigger,
@@ -14,8 +14,6 @@ import {
   DialogFooter,
 } from '@/components/ui/dialog';
 import { DialogDescription } from '@radix-ui/react-dialog';
-import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
-import { IconBase } from 'react-icons';
 
 export function Settings() {
   const colors = [
@@ -90,50 +88,70 @@ export function Settings() {
   return (
     <MainLayout title="Settings">
       <div className="p-4">
-        <h2 className="font-medium">Accounts</h2>
-        <p className="text-slate-500">
-          Here you can switch between different tokens in case you have more
-          than one vercel account.
-        </p>
-        {accessTokens?.length === 0 && <p>No access tokens found</p>}
-        {accessTokens && accessTokens.length > 0 && (
-          <ul className="mt-4 flex flex-col">
-            {accessTokens.map((at) => (
-              <li
-                className="flex gap-2 items-center justify-between rounded-lg p-2 hover:bg-slate-200 dark:hover:bg-slate-800"
-                key={at.id}
+        {accessTokens?.length === 0 && (
+          <div className="pt-12 pb-4 text-center">
+            <span className="text-2xl">🚀</span>
+            <h1 className="text-2xl font-medium">
+              Start by adding an access token
+            </h1>
+            <p className="text-slate-500 dark:text-slate-300">
+              You can get your access token on{' '}
+              <a
+                className="text-blue-500 underline"
+                target="_blank"
+                href="https://vercel.com/account/tokens"
+                rel="noreferrer"
               >
-                <button
-                  className="flex gap-3 items-center flex-1"
-                  type="button"
-                  onClick={() => setCurrentAccessToken(at)}
+                vercel.com/account/tokens
+              </a>
+            </p>
+          </div>
+        )}
+        {accessTokens && accessTokens.length > 0 && (
+          <>
+            <h1 className="font-medium text-lg">Access tokens</h1>
+            <p className="text-slate-500 dark:text-slate-300">
+              Here you can switch between different access tokens
+              <br /> in case you have more than one vercel account.
+            </p>
+            <ul className="mt-4 flex flex-col">
+              {accessTokens.map((at) => (
+                <li
+                  className="flex gap-2 items-center justify-between rounded-lg p-2 hover:bg-slate-200 dark:hover:bg-slate-800"
+                  key={at.id}
                 >
-                  {currentAccessToken?.id === at.id && (
-                    <span className="text-green-500 bg-green-100 rounded-full p-1 border border-green-300">
-                      <CheckCircle />
-                    </span>
-                  )}
-                  <div className="text-left">
-                    <p className="font-medium">{at.name}</p>
-                    <p className="font-mono font-slate-400">
-                      {formatToken(at.token)}
-                    </p>
-                  </div>
-                </button>
-                <Button
-                  size="icon"
-                  variant="ghost"
-                  type="button"
-                  onClick={() => deleteAccount(at)}
-                >
-                  <TrashIcon size="16" />
-                </Button>
-              </li>
-            ))}
-          </ul>
+                  <button
+                    className="flex gap-3 items-center flex-1"
+                    type="button"
+                    onClick={() => setCurrentAccessToken(at)}
+                  >
+                    {currentAccessToken?.id === at.id && (
+                      <span className="text-green-500 bg-green-100 rounded-full dark:bg-green-100/20">
+                        <CheckCircle2 />
+                      </span>
+                    )}
+                    <div className="text-left">
+                      <p className="font-medium">{at.name}</p>
+                      <p className="font-mono font-slate-400">
+                        {formatToken(at.token)}
+                      </p>
+                    </div>
+                  </button>
+                  <Button
+                    size="icon"
+                    variant="ghost"
+                    type="button"
+                    onClick={() => deleteAccount(at)}
+                  >
+                    <TrashIcon size="16" />
+                  </Button>
+                </li>
+              ))}
+            </ul>
+          </>
         )}
         <Dialog open={showAccDialog} onOpenChange={setShowAccDialog}>
-          <DialogTrigger>
+          <DialogTrigger className="flex items-center justify-center w-full">
             <Button variant="default" className="mt-4">
               Add access token
             </Button>
@@ -143,7 +161,7 @@ export function Settings() {
               <DialogHeader className="text-lg font-medium">
                 Add access token
               </DialogHeader>
-              <DialogDescription className="text-slate-500">
+              <DialogDescription className="text-slate-500 dark:text-slate-400">
                 The token will be stored in your computer and only be used to
                 request data from Vercel API.
               </DialogDescription>

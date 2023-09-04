@@ -26,6 +26,7 @@ export const useAppStore = create<AppStore>()(
       addAccessToken: (at: AccessToken) => {
         set((state) => ({
           accessTokens: [...state.accessTokens, at],
+          currentAccessToken: at,
         }));
       },
       removeAccessToken: (token: AccessToken) => {
