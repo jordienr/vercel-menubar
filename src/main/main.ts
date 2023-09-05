@@ -9,19 +9,19 @@
  * `./src/main.js` using webpack. This gives us some performance wins.
  */
 import path from 'path';
-import {
-  app,
-  BrowserWindow,
-  shell,
-  ipcMain,
-  Tray,
-  Menu,
-  nativeImage,
-} from 'electron';
+import { app, BrowserWindow, shell, ipcMain, Tray, Menu } from 'electron';
 import { autoUpdater } from 'electron-updater';
 import log from 'electron-log';
 import MenuBuilder from './menu';
 import { resolveHtmlPath } from './util';
+
+const RESOURCES_PATH = app.isPackaged
+  ? path.join(process.resourcesPath, 'assets')
+  : path.join(__dirname, '../../assets');
+
+const getAssetPath = (...paths: string[]): string => {
+  return path.join(RESOURCES_PATH, ...paths);
+};
 
 let tray: Tray;
 
@@ -54,16 +54,15 @@ if (isDebug) {
 }
 
 const installExtensions = async () => {
-  const installer = require('electron-devtools-installer');
-  const forceDownload = !!process.env.UPGRADE_EXTENSIONS;
-  const extensions = ['REACT_DEVELOPER_TOOLS'];
-
-  return installer
-    .default(
-      extensions.map((name) => installer[name]),
-      forceDownload
-    )
-    .catch(console.log);
+  // const installer = require('electron-devtools-installer');
+  // const forceDownload = !!process.env.UPGRADE_EXTENSIONS;
+  // const extensions = ['REACT_DEVELOPER_TOOLS'];
+  // return installer
+  //   .default(
+  //     extensions.map((name) => installer[name]),
+  //     forceDownload
+  //   )
+  //   .catch(console.log);
 };
 
 const createWindow = async () => {
@@ -71,18 +70,10 @@ const createWindow = async () => {
     await installExtensions();
   }
 
-  const RESOURCES_PATH = app.isPackaged
-    ? path.join(process.resourcesPath, 'assets')
-    : path.join(__dirname, '../../assets');
-
-  const getAssetPath = (...paths: string[]): string => {
-    return path.join(RESOURCES_PATH, ...paths);
-  };
-
   mainWindow = new BrowserWindow({
     autoHideMenuBar: true,
-    show: false,
-    width: 420,
+    show: true,
+    width: 420, // u know it
     height: 600,
     titleBarStyle: 'hidden',
     icon: getAssetPath('icon.png'),
@@ -144,7 +135,7 @@ app
   .whenReady()
   .then(() => {
     app.dock.hide();
-    const icon = nativeImage.createFromPath('./assets/icons/16x16.png');
+    const icon = getAssetPath('icons/iconTemplate.png');
     tray = new Tray(icon);
     tray.on('click', () => {
       mainWindow?.show();
