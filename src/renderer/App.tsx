@@ -11,6 +11,7 @@ import { About } from '@/pages/About';
 import { Toaster } from 'sonner';
 import { Start } from '@/pages/Start';
 import { Settings } from '../pages/Settings';
+import 'tailwindcss/tailwind.css';
 
 export default function App() {
   const queryClient = new QueryClient({
