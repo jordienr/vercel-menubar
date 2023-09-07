@@ -1,9 +1,26 @@
+/* eslint-disable react/jsx-no-comment-textnodes */
 import { useDeployments } from 'src/lib/queries';
 import { formatDate } from 'src/lib/dates';
 import { MainLayout } from '@/components/layout/MainLayout';
-import { ExternalLink } from 'lucide-react';
+import {
+  Clock,
+  Computer,
+  ExternalLink,
+  GitBranch,
+  Globe,
+  Inspect,
+  LucideIcon,
+  PcCase,
+  SquareCode,
+} from 'lucide-react';
 import { useLocation } from 'react-router-dom';
 import { Debug } from '@/components/Debug';
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from '@/components/ui/accordion';
 import { Deployment } from '../../types/Deployment';
 
 function StatusDot({ state }: { state: Deployment['state'] }) {
@@ -20,47 +37,131 @@ function StatusDot({ state }: { state: Deployment['state'] }) {
   return <div className={`w-2 h-2 rounded-full ${stateMap[state]}`} />;
 }
 
+function DeploymentDuration(dep: Deployment) {
+  const { createdAt, buildingAt, ready } = dep;
+
+  if (!createdAt || !buildingAt || !ready) return null;
+
+  const durationMs = new Date(ready).getTime() - new Date(buildingAt).getTime();
+
+  const durationSecs = Math.floor(durationMs / 1000);
+
+  return (
+    <div className="flex items-center gap-2 text-sm px-2 text-slate-500">
+      <Clock size="16" />
+      Duration:
+      <span className="">{durationSecs} secs</span>
+    </div>
+  );
+}
+
+function getCommitUrl(dep: Deployment) {
+  const { meta } = dep;
+  if (meta.githubCommitRef && meta.githubCommitSha) {
+    return `https://github.com/${meta.githubCommitOrg}/${meta.githubCommitRepo}/commit/${meta.githubCommitSha}`;
+  }
+}
+
+function LinkItem({
+  href,
+  children,
+  Icon,
+}: {
+  href: string | undefined;
+  children: any;
+  Icon: LucideIcon;
+}) {
+  return (
+    <a
+      className="group text-slate-500 hover:bg-white hover:text-slate-600 px-2 py-1 rounded-md flex items-center gap-2 font-medium transition-all hover:shadow-sm"
+      target="_blank"
+      href={href}
+      rel="noreferrer"
+    >
+      <Icon className="group-hover:text-blue-500" size="18" />
+      {children}
+    </a>
+  );
+}
 export function Deployments() {
   const { data, isLoading } = useDeployments();
-  const location = useLocation();
+
   return (
-    <MainLayout loading={isLoading} title="Deployments">
-      <div className="flex flex-col p-3">
+    <MainLayout
+      loading={isLoading}
+      title={
+        <>
+          <PcCase size="16" /> Deployments
+        </>
+      }
+    >
+      <div className="flex flex-col">
         {/* <Debug data={location} /> */}
-        {data?.deployments.map((dep) => {
-          return (
-            <a
-              key={dep.createdAt}
-              target="_blank"
-              className="grid grid-cols-3 justify-between w-full  p-2 rounded-md group hover:bg-slate-200/50 dark:hover:bg-slate-700/50 text-sm gap-2 items-center font-mono"
-              href={`${dep.inspectorUrl}`}
-              rel="noreferrer"
-              title={`${dep.inspectorUrl}`}
-            >
-              <div>
-                <div className="flex items-center gap-2">
-                  <StatusDot state={dep.state} />
-                  <div className="font-semibold font-sans">{dep.name}</div>
-                </div>
-                <div className="ml-4 text-slate-400">{dep.target}</div>
-              </div>
-              <div className="text-xs">
-                <div className="text-slate-400">
-                  {formatDate(new Date(dep.created), 'DD/MM/YY HH:mm')}d
-                </div>
-                <span className="text-slate-400 ml-auto  mr-4">
-                  @{dep.creator.username}
-                </span>
-              </div>
-              <div className="pr-3 ml-auto">
-                <ExternalLink
-                  size="16"
-                  className="text-slate-400 flex items-center"
-                />
-              </div>
-            </a>
-          );
-        })}
+        {/* <Debug data={data?.deployments[0]} /> */}
+        <Accordion type="multiple">
+          {data?.deployments.map((dep) => {
+            return (
+              <AccordionItem
+                value={dep.uid}
+                key={dep.createdAt}
+                // href={`${dep.inspectorUrl}`}
+              >
+                <AccordionTrigger className="p-3 text-sm text-slate-500 dark:text-slate-300">
+                  <div className="flex justify-between w-full mr-3">
+                    <div className="flex flex-col">
+                      <div className="flex items-center gap-2">
+                        <StatusDot state={dep.state} />
+                        <div className="font-semibold text-black dark:text-white">
+                          {dep.name}
+                        </div>
+                      </div>
+                      <span className="">@{dep.creator.username}</span>
+                    </div>
+                    <div className="flex flex-col text-right">
+                      <div className="capitalize">
+                        {dep.target || 'preview'}
+                      </div>
+                      <div className="">
+                        {formatDate(new Date(dep.created), 'N X ago')}
+                      </div>
+                    </div>
+                  </div>
+                </AccordionTrigger>
+                <AccordionContent className="p-3">
+                  <div className="flex flex-col gap-2">
+                    <DeploymentDuration {...dep} />
+                    <div className="grid grid-cols-2 gap-1">
+                      <LinkItem Icon={SquareCode} href={dep.inspectorUrl}>
+                        Deployment
+                      </LinkItem>
+                      <LinkItem
+                        Icon={SquareCode}
+                        href={`${dep.inspectorUrl}/logs`}
+                      >
+                        Logs
+                      </LinkItem>
+                      <LinkItem Icon={GitBranch} href={getCommitUrl(dep)}>
+                        Commit
+                      </LinkItem>
+                      {dep.url && dep.state !== 'ERROR' ? (
+                        <LinkItem Icon={Globe} href={`https://${dep.url}`}>
+                          View live
+                        </LinkItem>
+                      ) : null}
+                    </div>
+                    <pre className="bg-slate-800 mt-4 text-white py-1 px-2 rounded-md font-mono text-xs text-left overflow-auto">
+                      <div className="opacity-50"># commit message</div>
+                      <div>
+                        {'>'} {dep.meta.githubCommitMessage}
+                      </div>
+                    </pre>
+                    {/* <Debug data={dep.meta} /> */}
+                  </div>
+                </AccordionContent>
+              </AccordionItem>
+            );
+          })}
+        </Accordion>
       </div>
     </MainLayout>
   );
