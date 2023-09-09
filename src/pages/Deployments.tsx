@@ -28,11 +28,11 @@ function StatusDot({ state }: { state: Deployment['state'] }) {
   if (!state) return null;
 
   const stateMap: Record<typeof state, string> = {
-    BUILDING: 'bg-blue-400',
+    BUILDING: 'bg-yellow-400',
     READY: 'bg-green-400',
     CANCELED: 'bg-gray-400',
     ERROR: 'bg-red-400',
-    INITIALIZING: 'bg-yellow-400',
+    INITIALIZING: 'bg-gray-400',
     QUEUED: 'bg-yellow-400',
   };
   return <div className={`w-2 h-2 rounded-full ${stateMap[state]}`} />;
