@@ -1,4 +1,6 @@
+import { OutsideLink } from '@/components/OutsideLink';
 import { MainLayout } from '@/components/layout/MainLayout';
+import { Link } from 'react-router-dom';
 
 export function About() {
   return (
@@ -7,33 +9,58 @@ export function About() {
         <h1>Vercel Menubar</h1>
         <p>
           Vercel Menubar is an open source project created by{' '}
-          <a href="https://github.com/jordienr">Jordi Enric</a>
+          <OutsideLink href="https://github.com/jordienr">
+            Jordi Enric
+          </OutsideLink>
         </p>
         <p>
           You can find the source code for this project on{' '}
-          <a href="https://github.com/jordienr/vercel-menubar">Github </a>
+          <OutsideLink href="https://github.com/jordienr/vercel-menubar">
+            Github
+          </OutsideLink>
+        </p>
+        <p>Consider starring the project if you like it!</p>
+        <h2>Feedback</h2>
+        <p>
+          If you have any feedback, please reach out to me on{' '}
+          <OutsideLink href="https://twitter.com/jordienr">Twitter</OutsideLink>{' '}
+          or open an issue on{' '}
+          <OutsideLink href="https://github.com/jordienr/vercel-menubar/issues">
+            Github
+          </OutsideLink>
         </p>
         <h2>Special thanks</h2>
         <ul>
           <li>
-            Shadcn for creating <a href="https://ui.shadcn.com/">Shadcn UI</a>
+            Vercel, for offering a great platform and API to build on top of
           </li>
           <li>
-            <a href="https://twitter.com/emilkowalski_">Emil Kowalski</a> for
-            creating <a href="https://sonner.emilkowal.ski/">Sonner</a>
+            Shadcn for creating{' '}
+            <OutsideLink href="https://ui.shadcn.com/">Shadcn UI</OutsideLink>
           </li>
           <li>
-            <a href="https://github.com/electron-react-boilerplate/electron-react-boilerplate">
+            <OutsideLink href="https://twitter.com/emilkowalski_">
+              Emil Kowalski
+            </OutsideLink>{' '}
+            for creating{' '}
+            <OutsideLink href="https://sonner.emilkowal.ski/">
+              Sonner
+            </OutsideLink>
+          </li>
+          <li>
+            <OutsideLink href="https://github.com/electron-react-boilerplate/electron-react-boilerplate">
               Electron React Boilerplate
-            </a>
+            </OutsideLink>
           </li>
           <li>
-            <a href="https://tailwindcss.com/">TailwindCSS</a>
+            <OutsideLink href="https://tailwindcss.com/">
+              TailwindCSS
+            </OutsideLink>
           </li>
           <li>
-            <a href="https://tanstack.com/query/v3/">
+            <OutsideLink href="https://tanstack.com/query/latest/">
               React Query by the Tan Stack team
-            </a>
+            </OutsideLink>
           </li>
         </ul>
       </div>

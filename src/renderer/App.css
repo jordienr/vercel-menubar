@@ -21,3 +21,29 @@ body {
 .link {
   @apply text-blue-500 dark:text-blue-300 underline;
 }
+
+.prose {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.prose > * {
+  margin: 0;
+}
+.prose p {
+  @apply text-slate-700 dark:text-slate-200 font-light;
+}
+
+.prose h1 {
+  @apply text-xl font-medium;
+}
+.prose h2 {
+  @apply text-lg font-medium mt-8;
+}
+.prose ul {
+  @apply list-disc list-inside;
+}
+.prose ol {
+  @apply list-decimal list-inside;
+}
