@@ -173,7 +173,7 @@ export function Deployments() {
                     </div>
                     <pre className="bg-slate-800 mt-4 text-white py-1 px-2 rounded-md font-mono text-xs text-left overflow-auto">
                       <div className="opacity-50"># commit message</div>
-                      <div>
+                      <div className="whitespace-normal flex gap-2 mt-1">
                         <span className="text-blue-400">{'>'}</span>{' '}
                         {dep.meta.githubCommitMessage}
                       </div>
