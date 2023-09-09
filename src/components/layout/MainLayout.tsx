@@ -1,6 +1,8 @@
 /* eslint-disable react/require-default-props */
-import React, { PropsWithChildren } from 'react';
+import React, { PropsWithChildren, useCallback, useEffect } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
+import { RefreshCcw } from 'lucide-react';
+import { useDeployments } from '@/lib/queries';
 import { ThemeProvider } from './ThemeProvider';
 import { AccountPicker } from './AccountPicker';
 import { SpinnyTriangle } from '../SpinnyTriangle';
@@ -23,7 +25,7 @@ export function MainLayout({
               <h1 className="flex gap-2 items-center px-3 py-2 font-medium w-full draggable-area">
                 {title}
               </h1>
-              <div className="p-1">
+              <div className="p-1 flex gap-2 items-center">
                 <AccountPicker />
               </div>
             </div>

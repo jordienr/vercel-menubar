@@ -18,10 +18,16 @@ export function useDeployments() {
 
   const teamId = URLQuery.get('teamId') || '';
 
-  const query = useQuery(['deployments', teamId], () =>
-    api.deployments.list({
-      teamId,
-    })
+  const query = useQuery(
+    ['deployments', teamId],
+    () =>
+      api.deployments.list({
+        teamId,
+      }),
+    {
+      // refetch every 5 seconds
+      refetchInterval: 5000,
+    }
   );
 
   return query;

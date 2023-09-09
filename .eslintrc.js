@@ -12,7 +12,6 @@ module.exports = {
     'no-shadow': 'off',
     '@typescript-eslint/no-shadow': 'error',
     'no-unused-vars': 'off',
-    '@typescript-eslint/no-unused-vars': 'error',
     'import/prefer-default-export': 'off',
     'no-underscore-dangle': 'off',
     'consistent-return': 'off',
@@ -20,6 +19,7 @@ module.exports = {
     'react/jsx-props-no-spreading': 'off',
     'react/prop-types': 'off',
     '@typescript-eslint/no-unused-vars': 'off',
+    'react/require-default-props': 'off',
   },
   parserOptions: {
     ecmaVersion: 2020,

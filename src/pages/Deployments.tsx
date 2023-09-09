@@ -3,6 +3,7 @@ import { useDeployments } from 'src/lib/queries';
 import { formatDate } from 'src/lib/dates';
 import { MainLayout } from '@/components/layout/MainLayout';
 import {
+  Clipboard,
   Clock,
   Computer,
   ExternalLink,
@@ -46,11 +47,15 @@ function DeploymentDuration(dep: Deployment) {
 
   const durationSecs = Math.floor(durationMs / 1000);
 
+  const durationMins = `${Math.floor(durationSecs / 60)}:${`0${
+    durationSecs % 60
+  }`.slice(-2)}`;
+
   return (
-    <div className="flex items-center gap-2 text-sm px-2 text-slate-500">
+    <div className="flex font-medium items-center gap-2 text-sm px-2 text-slate-500">
       <Clock size="16" />
       Duration:
-      <span className="">{durationSecs} secs</span>
+      <span className="">{durationMins}</span>
     </div>
   );
 }
@@ -65,17 +70,20 @@ function getCommitUrl(dep: Deployment) {
 function LinkItem({
   href,
   children,
+  disabled = false,
   Icon,
 }: {
   href: string | undefined;
   children: any;
   Icon: LucideIcon;
+  disabled?: boolean;
 }) {
   return (
     <a
-      className="group text-slate-500 hover:bg-white hover:text-slate-600 px-2 py-1 rounded-md flex items-center gap-2 font-medium transition-all hover:shadow-sm"
+      style={{ opacity: disabled ? 0.5 : 1 }}
+      className="group text-slate-500 hover:bg-white hover:text-slate-600 px-2 py-1 rounded-md flex items-center gap-2 font-medium transition-all hover:shadow-sm bg-slate-200"
       target="_blank"
-      href={href}
+      href={disabled ? '/' : href}
       rel="noreferrer"
     >
       <Icon className="group-hover:text-blue-500" size="18" />
@@ -143,16 +151,31 @@ export function Deployments() {
                       <LinkItem Icon={GitBranch} href={getCommitUrl(dep)}>
                         Commit
                       </LinkItem>
-                      {dep.url && dep.state !== 'ERROR' ? (
-                        <LinkItem Icon={Globe} href={`https://${dep.url}`}>
-                          View live
-                        </LinkItem>
-                      ) : null}
+
+                      <LinkItem
+                        disabled={!dep.url && dep.state !== 'ERROR'}
+                        Icon={Globe}
+                        href={`https://${dep.url}`}
+                      >
+                        View live
+                      </LinkItem>
+
+                      <button
+                        type="button"
+                        className="flex gap-2 items-center px-2 py-1 font-medium rounded-md text-slate-500 hover:bg-white hover:text-slate-600 transition-all hover:shadow-sm bg-slate-200"
+                        onClick={() => {
+                          navigator.clipboard.writeText(dep.uid);
+                        }}
+                      >
+                        <Clipboard size="18" />
+                        Copy `{dep.meta.githubCommitRef}`
+                      </button>
                     </div>
                     <pre className="bg-slate-800 mt-4 text-white py-1 px-2 rounded-md font-mono text-xs text-left overflow-auto">
                       <div className="opacity-50"># commit message</div>
                       <div>
-                        {'>'} {dep.meta.githubCommitMessage}
+                        <span className="text-blue-400">{'>'}</span>{' '}
+                        {dep.meta.githubCommitMessage}
                       </div>
                     </pre>
                     {/* <Debug data={dep.meta} /> */}
