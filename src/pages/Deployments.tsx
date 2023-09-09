@@ -123,7 +123,7 @@ export function Deployments() {
                           {dep.name}
                         </div>
                       </div>
-                      <span className="">@{dep.creator.username}</span>
+                      <span className="text-left">@{dep.creator.username}</span>
                     </div>
                     <div className="flex flex-col text-right">
                       <div className="capitalize">
