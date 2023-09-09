@@ -81,7 +81,7 @@ function LinkItem({
   return (
     <a
       style={{ opacity: disabled ? 0.5 : 1 }}
-      className="group text-slate-500 hover:bg-white hover:text-slate-600 px-2 py-1 rounded-md flex items-center gap-2 font-medium transition-all hover:shadow-sm bg-slate-200"
+      className="group text-slate-500 hover:bg-white hover:text-slate-600 dark:bg-slate-800/70 dark:text-slate-200 dark:hover:bg-slate-800 px-2 py-1 rounded-md flex items-center gap-2 font-medium transition-all hover:shadow-sm bg-slate-200"
       target="_blank"
       href={disabled ? '/' : href}
       rel="noreferrer"
@@ -109,11 +109,7 @@ export function Deployments() {
         <Accordion type="multiple">
           {data?.deployments.map((dep) => {
             return (
-              <AccordionItem
-                value={dep.uid}
-                key={dep.createdAt}
-                // href={`${dep.inspectorUrl}`}
-              >
+              <AccordionItem value={dep.uid} key={dep.createdAt}>
                 <AccordionTrigger className="p-3 text-sm text-slate-500 dark:text-slate-300">
                   <div className="flex justify-between w-full mr-3">
                     <div className="flex flex-col">
@@ -162,7 +158,7 @@ export function Deployments() {
 
                       <button
                         type="button"
-                        className="flex gap-2 items-center px-2 py-1 font-medium rounded-md text-slate-500 hover:bg-white hover:text-slate-600 transition-all hover:shadow-sm bg-slate-200"
+                        className="group text-slate-500 hover:bg-white hover:text-slate-600 dark:bg-slate-800/70 dark:text-slate-200 dark:hover:bg-slate-800 px-2 py-1 rounded-md flex items-center gap-2 font-medium transition-all hover:shadow-sm bg-slate-200"
                         onClick={() => {
                           navigator.clipboard.writeText(dep.uid);
                         }}
